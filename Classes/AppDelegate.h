@@ -3,6 +3,8 @@
 
 #include "cocos2d.h"
 
+#define IS_STATS_ACTIVE false
+#define FRAMERATE 60
 /**
 @brief    The cocos2d Application.
 
@@ -11,6 +13,8 @@ The reason for implement as private inheritance is to hide some interface call b
 class  AppDelegate : private cocos2d::Application
 {
 public:
+    
+
     AppDelegate();
     virtual ~AppDelegate();
 
@@ -32,6 +36,13 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
+
+private:
+    // Game title
+    std::string mGameTitle = "Why fishes do not live in space?";
+
+    // Scenes
+    cocos2d::Scene * mGameScene;
 };
 
 #endif // _APP_DELEGATE_H_
