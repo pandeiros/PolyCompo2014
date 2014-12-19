@@ -64,15 +64,22 @@ bool GameScene::init ()
     this->addChild(label, 1);
 
     // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
+    testSprite = Sprite::create ("HelloWorld.png");
 
     // position the sprite on the center of the screen
-    sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+    testSprite->setPosition (Vec2 (visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 
     // add the sprite as a child to this layer
-    this->addChild(sprite, 0);
+    this->addChild (testSprite, 0);
+
+    scheduleUpdate ();
     
     return true;
+}
+
+// Update
+void GameScene::update (float dt) {
+    
 }
 
 
