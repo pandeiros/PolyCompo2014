@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "MainScene.h"
-//#include "Player.h"
+#include "Player.h"
 
 class GameScene : public MainScene {
 public:
@@ -23,9 +23,7 @@ public:
     virtual void onKeyReleased (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
 private:
-
-
-    //Player * mPlayer;
+    Player * mPlayer;
 };
 
 #endif // GAME_SCENE

@@ -16,7 +16,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::create(mGameTitle);
+        //glview = GLView::createWithFullScreen (mGameTitle);
+        glview = GLView::createWithRect (mGameTitle, cocos2d::Rect (0.f, 0.f, mWidth, mHeight), 1.f);
         director->setOpenGLView(glview);
     }
 
@@ -27,10 +28,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval (1.0 / FRAMERATE);
 
     // create a scene. it's an autorelease object
-    mGameScene = MenuScene::createScene ();
+    mMenuScene = MenuScene::createScene ();
 
     // run
-    director->runWithScene (mGameScene);
+    director->runWithScene (mMenuScene);
 
     return true;
 }

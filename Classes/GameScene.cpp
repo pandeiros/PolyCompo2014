@@ -29,6 +29,9 @@ bool GameScene::init () {
     scheduleUpdate ();
     mState = MainScene::GAME;
 
+    mPlayer = Player::create ();
+    this->addChild (mPlayer, ENTITIES);
+
     return true;
 }
 
@@ -38,7 +41,7 @@ void GameScene::update (float dt) {
 
 void GameScene::onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
     if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
-        Director::getInstance ()->replaceScene (MenuScene::createScene ());
+        Director::getInstance ()->replaceScene (TransitionFade::create (1, MenuScene::createScene (), Color3B (0, 0, 0)));
     }
 
 }

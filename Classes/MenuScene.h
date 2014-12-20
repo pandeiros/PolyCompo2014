@@ -23,7 +23,12 @@ public:
     virtual void onKeyReleased (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
 private:
-    
+    cocos2d::Menu * mMenu;
+    cocos2d::MenuItemImage * mStartButton;
+    cocos2d::Sprite * mWars;
+
+    void startGame ();
+
 };
 
 #endif // GAME_SCENE

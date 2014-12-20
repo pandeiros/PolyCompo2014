@@ -11,6 +11,12 @@ public:
         MENU
     };
 
+    enum Layers {
+        BACKGROUND,
+        GUI,
+        ENTITIES
+    };
+
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::Scene* createScene ();
 
@@ -35,6 +41,8 @@ public:
 protected:
     cocos2d::EventListenerKeyboard * mEventListener;
     StateID mState;
+    cocos2d::Sprite * mBackground;
+    
 
 };
 

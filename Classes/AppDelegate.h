@@ -42,7 +42,10 @@ private:
     std::string mGameTitle = "Why fishes do not live in space?";
 
     // Scenes
-    cocos2d::Scene * mGameScene;
+    cocos2d::Scene * mMenuScene;
+
+    float mWidth = 1366;
+    float mHeight = 768;
 
    
 };
