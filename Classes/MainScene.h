@@ -1,6 +1,9 @@
 #ifndef MAIN_SCENE
 #define MAIN_SCENE
 
+#define _MAX(a,b) (((a) > (b)) ? (a) : (b))
+#define _MIN(a,b) (((a) < (b)) ? (a) : (b))
+
 #include "cocos2d.h"
 
 class MainScene : public cocos2d::Layer {
@@ -13,6 +16,7 @@ public:
 
     enum Layers {
         BACKGROUND,
+        SECOND_PLAN,
         GUI,
         ENTITIES
     };
