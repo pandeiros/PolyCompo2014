@@ -17,7 +17,8 @@ x64/
 build/
 [Bb]in/
 [Oo]bj/
-[Dd]ebug.win32
+[Dd]ebug.win32/
+[Rr]elease.win32/
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/

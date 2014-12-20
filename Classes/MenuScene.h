@@ -26,9 +26,11 @@ private:
     cocos2d::Menu * mMenu;
     cocos2d::MenuItemImage * mStartButton;
     cocos2d::Sprite * mWars;
+    cocos2d::Sprite * mTitle;
 
     void startGame ();
 
+    bool isStartActive = false;
 };
 
 #endif // GAME_SCENE

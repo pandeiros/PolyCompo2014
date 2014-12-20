@@ -43,6 +43,7 @@ protected:
     StateID mState;
     cocos2d::Sprite * mBackground;
     
+    float time = 0;
 
 };
 

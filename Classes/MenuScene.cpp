@@ -39,22 +39,42 @@ bool MenuScene::init () {
 
     // Button
     mStartButton = MenuItemImage::create ("ButtonEmpty.png", "ButtonFull.png", CC_CALLBACK_0 (MenuScene::startGame, this));
-    mStartButton->setPosition (visibleSize.width / 2, visibleSize.height / 2 + mStartButton->getBoundingBox ().size.height / 2);
+    mStartButton->setPosition (visibleSize.width / 2.f, visibleSize.height / 2.f + mStartButton->getBoundingBox ().size.height / 2 - 140);
+    mStartButton->setScale (0.5f);
    
     // "Wars" sprite
     mWars = Sprite::create ("Wars.png");
-    mWars->setPosition (visibleSize.width / 2, visibleSize.height / 2 - mWars->getBoundingBox().size.height / 2 - 15);
+    mWars->setScale (0.5f);
+    mWars->setPosition (visibleSize.width / 2.f, visibleSize.height / 2.f - mWars->getBoundingBox().size.height / 2 - 115);
     this->addChild (mWars, Layers::GUI);
 
     mMenu = Menu::create (mStartButton, NULL);
     mMenu->setPosition (Vec2::ZERO);
     this->addChild (mMenu, Layers::GUI);
+    
+    // Title
+    mTitle = Sprite::create ("placeholder.png");
+    mTitle->setPosition (visibleSize.width / 2.f, visibleSize.height - 150.f);
+    this->addChild (mTitle, Layers::GUI);
 
     return true;
 }
 
 // Update
 void MenuScene::update (float dt) {
+    time += dt;
+
+    // Flashing start button
+    if (time > 0.6f) {
+        time = 0.f;
+        if (isStartActive) {
+            mStartButton->setNormalImage (Sprite::create ("ButtonEmpty.png"));
+        }
+        else {
+            mStartButton->setNormalImage (Sprite::create ("ButtonFull.png"));
+        }
+        isStartActive = !isStartActive;
+    }
 }
 
 void MenuScene::onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
