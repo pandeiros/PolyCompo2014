@@ -1,11 +1,11 @@
-#ifndef GAME_SCENE
-#define GAME_SCENE
+#ifndef MENU_SCENE
+#define MENU_SCENE
 
 #include "cocos2d.h"
 #include "MainScene.h"
 //#include "Player.h"
 
-class GameScene : public MainScene {
+class MenuScene : public MainScene {
 public:
     // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::Scene* createScene ();
@@ -17,15 +17,13 @@ public:
     virtual void update (float dt);
 
     // implement the "static create()" method manually
-    CREATE_FUNC (GameScene);
+    CREATE_FUNC (MenuScene);
 
     virtual void onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     virtual void onKeyReleased (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
 private:
-
-
-    //Player * mPlayer;
+    
 };
 
 #endif // GAME_SCENE
