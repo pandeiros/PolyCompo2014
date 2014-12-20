@@ -32,6 +32,7 @@ bool GameScene::init () {
     // HERE STARTS THE MAGIC
     scheduleUpdate ();
     mState = States::S_GAME;
+    Size visibleSize = Director::getInstance ()->getVisibleSize ();
 
     // Box2D world init
     b2Vec2 vec (0.f, 0.f);
@@ -44,6 +45,14 @@ bool GameScene::init () {
     mapKeysPressed[EventKeyboard::KeyCode::KEY_RIGHT_ARROW] = false;
     mapKeysPressed[EventKeyboard::KeyCode::KEY_LEFT_ARROW] = false;
     mapKeysPressed[EventKeyboard::KeyCode::KEY_DOWN_ARROW] = false;
+
+    for (unsigned int i = 0; i < 100; ++i) {
+        Star * star = Star::create (cocos2d::Vec2 (50.f + rand () % (int)(visibleSize.width), 50.f + rand () % (int)(visibleSize.height * 0.9f)));
+        star->setScale (0.2f + (rand () % 6) / 10.f);
+        star->setOpacity (50 + (rand () % 200));
+        this->addChild (star, Layers::SECOND_PLAN);
+        vecStars.push_back (star);
+    }
 
     return true;
 }
@@ -140,7 +149,7 @@ void GameScene::starsUpdate (float dt) {
     Size visibleSize = Director::getInstance ()->getVisibleSize ();
 
     if (chance == 0) {
-        Star * star = Star::create (cocos2d::Vec2 (visibleSize.width * 1.1, 100 + rand () % (int)(visibleSize.height * 0.8)));
+        Star * star = Star::create (cocos2d::Vec2 (visibleSize.width * 1.03, 100 + rand () % (int)(visibleSize.height * 0.8)));
         star->setScale (0.2f + (rand() % 8) / 10.f);
         star->setOpacity (50 + (rand () % 200));
         this->addChild (star, Layers::SECOND_PLAN);

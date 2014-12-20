@@ -39,9 +39,9 @@ namespace Movement {
         UL = 1 << 7
     };
 
-    static float playerSpeed = 500.f;
+    static float playerSpeed = 400.f;
     static float missileSpeed = 1000.f;
-    static float enemySpeed = 300.f;
+    static float enemySpeed = 200.f;
     static float starSpeed = 10.f;
 }
 

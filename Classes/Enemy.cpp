@@ -9,7 +9,7 @@ Enemy::~Enemy () {
 }
 
 Enemy* Enemy::create (cocos2d::Vec2 position, Enemies::Type type, Movement::Directions direction) {
-    Enemy* wbSprite = new Enemy ();
+    Enemy* enemy = new Enemy ();
 
     std::string filename;
 
@@ -22,15 +22,15 @@ Enemy* Enemy::create (cocos2d::Vec2 position, Enemies::Type type, Movement::Dire
             break;
     }
 
-    if (wbSprite->initWithFile (filename)) {
-        wbSprite->autorelease ();
+    if (enemy->initWithFile (filename)) {
+        enemy->autorelease ();
 
-        wbSprite->initOptions (position);
+        enemy->initOptions (position);
 
-        return wbSprite;
+        return enemy;
     }
 
-    CC_SAFE_DELETE (wbSprite);
+    CC_SAFE_DELETE (enemy);
     return NULL;
 }
 
@@ -44,6 +44,7 @@ void Enemy::update (float dt) {
 
 void Enemy::initOptions (cocos2d::Vec2 position) {
     this->setPosition (position);
+    this->setScale (0.7f);
 }
 
 bool Enemy::getIsValid () {

@@ -23,13 +23,13 @@ Missile* Missile::create (cocos2d::Vec2 position, Missiles::Type type, Movement:
     }
 
     switch (direction) {
-        case Movement::LEFT :
+        case Movement::LEFT:
             missile->dx = -1; break;
-        case Movement::DOWN :
+        case Movement::DOWN:
             missile->dy = -1; break;
-        case Movement::RIGHT :
+        case Movement::RIGHT:
             missile->dx = 1; break;
-        case Movement::UP :
+        case Movement::UP:
             missile->dy = 1; break;
     }
 
@@ -45,8 +45,8 @@ Missile* Missile::create (cocos2d::Vec2 position, Missiles::Type type, Movement:
 }
 
 void Missile::update (float dt) {
-    
-    this->setPosition (this->getPosition () + cocos2d::Vec2 (this->dx, this->dy));
+
+    this->setPosition (this->getPosition () + cocos2d::Vec2 (this->dx * Movement::missileSpeed * dt, this->dy * Movement::missileSpeed * dt));
 
     if (this->getPosition ().x > 3000 || this->getPosition ().x < -1000) {
 
