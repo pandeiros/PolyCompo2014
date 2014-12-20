@@ -150,7 +150,7 @@ void IntroScene::update (float dt) {
 
 void IntroScene::onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
     switch (keyCode) {
-        case EventKeyboard::KeyCode::KEY_ENTER: {
+        case EventKeyboard::KeyCode::KEY_ENTER: case EventKeyboard::KeyCode::KEY_KP_ENTER : {
             Director::getInstance ()->replaceScene (TransitionFade::create (2, GameScene::createScene (), Color3B (0, 0, 0))); break;
         }
         case EventKeyboard::KeyCode::KEY_ESCAPE: {
