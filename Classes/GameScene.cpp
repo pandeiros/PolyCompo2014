@@ -34,11 +34,7 @@ bool GameScene::init () {
     mState = States::S_GAME;
     Size visibleSize = Director::getInstance ()->getVisibleSize ();
 
-    // Box2D world init
-    b2Vec2 vec (0.f, 0.f);
-    world = new b2World (vec);
-
-    mPlayer = Player::create ();
+    mPlayer = Player::create (Vec2(400.f,400.f));
     this->addChild (mPlayer, Layers::PLAYER);
 
     mapKeysPressed[EventKeyboard::KeyCode::KEY_UP_ARROW] = false;

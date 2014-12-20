@@ -3,6 +3,8 @@
 
 #include "cocos2d.h"
 #include "EnumIDs.h"
+#include <Box2D\Box2D.h>
+#include "GameScene.h"
 
 class Enemy : public cocos2d::Sprite
 {
