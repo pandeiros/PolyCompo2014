@@ -43,6 +43,8 @@ private:
 
     // Scenes
     cocos2d::Scene * mGameScene;
+
+   
 };
 
 #endif // _APP_DELEGATE_H_
