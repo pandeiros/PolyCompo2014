@@ -19,6 +19,9 @@
     <Filter Include="Classes\Scenes">
       <UniqueIdentifier>{1f6dbf50-99a9-46d2-8ff1-fc6d8524afaf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Missiles">
+      <UniqueIdentifier>{64cb1a28-4f9d-40c3-bc2f-b5a3de6b9a54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -39,14 +42,8 @@
     <ClCompile Include="..\Classes\Player.cpp">
       <Filter>Classes\Player</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\AnimationUtils.cpp">
-      <Filter>Classes\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\IntroScene.cpp">
-      <Filter>Classes\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\AnimatedSprite.cpp">
-      <Filter>Classes\Core</Filter>
+    <ClCompile Include="..\Classes\Waterball.cpp">
+      <Filter>Classes\Missiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,17 +65,8 @@
     <ClInclude Include="..\Classes\Player.h">
       <Filter>Classes\Player</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\AnimationUtils.h">
-      <Filter>Classes\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\EnumIDs.h">
-      <Filter>Classes\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\IntroScene.h">
-      <Filter>Classes\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\AnimatedSprite.h">
-      <Filter>Classes\Core</Filter>
+    <ClInclude Include="..\Classes\Waterball.h">
+      <Filter>Classes\Missiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
