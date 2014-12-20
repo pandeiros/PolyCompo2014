@@ -42,9 +42,6 @@
     <ClCompile Include="..\Classes\Player.cpp">
       <Filter>Classes\Player</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Waterball.cpp">
-      <Filter>Classes\Missiles</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\AnimatedSprite.cpp">
       <Filter>Classes\Core</Filter>
     </ClCompile>
@@ -53,6 +50,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\IntroScene.cpp">
       <Filter>Classes\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Missile.cpp">
+      <Filter>Classes\Missiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -74,9 +74,6 @@
     <ClInclude Include="..\Classes\Player.h">
       <Filter>Classes\Player</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Waterball.h">
-      <Filter>Classes\Missiles</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\AnimatedSprite.h">
       <Filter>Classes\Core</Filter>
     </ClInclude>
@@ -88,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\IntroScene.h">
       <Filter>Classes\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Missile.h">
+      <Filter>Classes\Missiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
