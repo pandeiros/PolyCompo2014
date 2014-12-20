@@ -29,10 +29,21 @@ namespace Movement {
         UP = 1,
         RIGHT = 1 << 1,
         DOWN = 1 << 2,
-        LEFT = 1 << 3
+        LEFT = 1 << 3,
+		NE = 1 << 4,
+		NW = 1 << 5,
+		SE = 1 << 6,
+		SW = 1 << 7
     };
 
     static float playerSpeed = 10.f;
+}
+
+namespace Missiles{
+	enum Type{
+		M_WATERBALL = 0,
+		M_ENEMYS_BALL = 1
+	};
 }
 
 namespace Cutscenes {

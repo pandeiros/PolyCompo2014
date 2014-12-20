@@ -60,7 +60,7 @@ void GameScene::onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
             break;
         }
         case EventKeyboard::KeyCode::KEY_SPACE: {
-            vecMissiles.push_back (Missile::create(mPlayer->getPosition(),Missiles::M_WATERBALL));
+            vecMissiles.push_back (Missile::create(mPlayer->getPosition(),Missiles::M_WATERBALL, Movement::RIGHT));
             break;
         }
     }
