@@ -65,4 +65,12 @@
       <Filter>resource</Filter>
     </ResourceCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\Pics\player_placeholder.png">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="..\Classes\player_placeholder.png">
+      <Filter>Classes</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
