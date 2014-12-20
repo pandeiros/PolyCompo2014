@@ -33,6 +33,10 @@ bool GameScene::init () {
     scheduleUpdate ();
     mState = States::S_GAME;
 
+    // Box2D world init
+    b2Vec2 vec (0.f, 0.f);
+    world = new b2World (vec);
+
     mPlayer = Player::create ();
     this->addChild (mPlayer, Layers::PLAYER);
 

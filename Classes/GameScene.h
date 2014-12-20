@@ -2,6 +2,7 @@
 #define GAME_SCENE
 
 #include "cocos2d.h"
+#include <Box2D\Box2D.h>
 #include "MainScene.h"
 #include "Player.h"
 #include "Missile.h"
@@ -35,6 +36,8 @@ private:
     std::vector <Missile*> vecMissiles;
     std::vector <Enemy*> vecEnemies;
     std::vector <Star*> vecStars;
+
+    b2World * world;
 };
 
 #endif // GAME_SCENE
