@@ -63,6 +63,13 @@ void GameScene::update (float dt) {
             vecMissiles.pop_back ();
         }
     }
+	/*if(enm!=nullptr)
+		if (enm->getIsValid())
+			enm->update(dt);
+		else {
+			if (enm->getParent() != nullptr)
+				enm->getParent()->removeChild(this);
+		}*/
 }
 
 

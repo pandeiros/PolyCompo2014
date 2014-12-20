@@ -5,6 +5,7 @@
 #include "MainScene.h"
 #include "Player.h"
 #include "Missile.h"
+#include "Enemy.h"
 
 class GameScene : public MainScene {
 public:
@@ -26,6 +27,7 @@ public:
 private:
     Player * mPlayer;
     std::vector <Missile*> vecMissiles;
+	Enemy *enm;
 };
 
 #endif // GAME_SCENE

@@ -46,6 +46,13 @@ namespace Missiles{
 	};
 }
 
+namespace Enemies{
+	enum Type{
+		E_TIEFIGHTER = 0,
+		E_OTHER_ = 1
+	};
+}
+
 namespace Cutscenes {
     enum Intro {
         _1_SPRITE_PISCES = 0,

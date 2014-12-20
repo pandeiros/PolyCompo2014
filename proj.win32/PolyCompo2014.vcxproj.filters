@@ -22,6 +22,9 @@
     <Filter Include="Classes\Missiles">
       <UniqueIdentifier>{64cb1a28-4f9d-40c3-bc2f-b5a3de6b9a54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Enemies">
+      <UniqueIdentifier>{8df9e0ab-1ec6-40e1-a762-b2a75daa88a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -53,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Missile.cpp">
       <Filter>Classes\Missiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Enemy.cpp">
+      <Filter>Classes\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,18 +95,13 @@
     <ClInclude Include="..\Classes\Missile.h">
       <Filter>Classes\Missiles</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Enemy.h">
+      <Filter>Classes\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\Resources\Pics\player_placeholder.png">
-      <Filter>resource</Filter>
-    </Image>
-    <Image Include="..\Classes\player_placeholder.png">
-      <Filter>Classes</Filter>
-    </Image>
   </ItemGroup>
 </Project>

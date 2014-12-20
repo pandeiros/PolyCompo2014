@@ -138,6 +138,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="..\Classes\AnimatedSprite.cpp" />
     <ClCompile Include="..\Classes\AnimationUtils.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\Enemy.cpp" />
     <ClCompile Include="..\Classes\GameScene.cpp" />
     <ClCompile Include="..\Classes\IntroScene.cpp" />
     <ClCompile Include="..\Classes\MainScene.cpp" />
@@ -150,6 +151,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="..\Classes\AnimatedSprite.h" />
     <ClInclude Include="..\Classes\AnimationUtils.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\Enemy.h" />
     <ClInclude Include="..\Classes\EnumIDs.h" />
     <ClInclude Include="..\Classes\GameScene.h" />
     <ClInclude Include="..\Classes\IntroScene.h" />
@@ -173,10 +175,6 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\Classes\player_placeholder.png" />
-    <Image Include="..\Resources\Pics\player_placeholder.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
