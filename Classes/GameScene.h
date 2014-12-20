@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "MainScene.h"
 #include "Player.h"
+#include "Missile.h"
 
 class GameScene : public MainScene {
 public:
@@ -24,6 +25,7 @@ public:
 
 private:
     Player * mPlayer;
+    std::vector <Missile*> vecMissiles;
 };
 
 #endif // GAME_SCENE
