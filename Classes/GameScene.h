@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Missile.h"
 #include "Enemy.h"
+#include "EnumIDs.h"
 
 class GameScene : public MainScene {
 public:
@@ -25,9 +26,12 @@ public:
     virtual void onKeyReleased (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
 private:
+    void missilesUpdate (float dt);
+    void enemiesUpdate (float dt);
+
     Player * mPlayer;
     std::vector <Missile*> vecMissiles;
-	Enemy *enm;
+    std::vector <Enemy*> vecEnemies;
 };
 
 #endif // GAME_SCENE

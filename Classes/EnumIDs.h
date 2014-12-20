@@ -6,7 +6,10 @@ namespace Layers {
         BACKGROUND,
         SECOND_PLAN,
         GUI,
-        ENTITIES
+        ENTITIES,
+        MISSILES,
+        PICKUPS,
+        PLAYER
     };
 }
 
@@ -30,27 +33,33 @@ namespace Movement {
         RIGHT = 1 << 1,
         DOWN = 1 << 2,
         LEFT = 1 << 3,
-		NE = 1 << 4,
-		NW = 1 << 5,
-		SE = 1 << 6,
-		SW = 1 << 7
+        UR = 1 << 4,
+        DR = 1 << 5,
+        DL = 1 << 6,
+        UL = 1 << 7
     };
 
     static float playerSpeed = 10.f;
 }
 
 namespace Missiles{
-	enum Type{
-		M_WATERBALL = 0,
-		M_ENEMYS_BALL = 1
-	};
+    enum Type{
+        M_WATERBALL = 0,
+        M_ENEMYS_BALL = 1
+    };
 }
 
 namespace Enemies{
-	enum Type{
-		E_TIEFIGHTER = 0,
-		E_OTHER_ = 1
-	};
+    enum Type{
+        E_TIEFIGHTER = 0,
+        E_OTHER_ = 1
+    };
+
+    enum Difficulty {
+        EASY = 30,
+        MEDIUM = 20,
+        HARD = 10
+    };
 }
 
 namespace Cutscenes {

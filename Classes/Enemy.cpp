@@ -37,7 +37,7 @@ Enemy* Enemy::create(cocos2d::Vec2 position, Enemies::Type type, Movement::Direc
 }
 
 void Enemy::update(float dt){
-	this->setPosition(this->getPosition() + cocos2d::Vec2(100*dt*(-1), 0));
+	this->setPosition(this->getPosition() - cocos2d::Vec2(1000*dt, 0));
 
 	if (this->getPosition().x > 3000 || this->getPosition().x < -1000) {
 

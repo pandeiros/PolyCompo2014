@@ -1,5 +1,5 @@
-#ifndef PLAYER
-#define PLAYER
+#ifndef _PLAYER_
+#define _PLAYER_
 
 #include "cocos2d.h"
 #include "EnumIDs.h"
