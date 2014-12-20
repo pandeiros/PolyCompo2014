@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>animations</key>
+	<dict>
+		<key>vaderAnim_idle</key>
+		<dict>
+			<key>delay</key>
+			<real>0.1</real>
+			<key>frames</key>
+			<array>
+				<string>anims/vaderAnim_01.png</string>
+				<string>anims/vaderAnim_02.png</string>
+				<string>anims/vaderAnim_03.png</string>
+				<string>anims/vaderAnim_04.png</string>
+				<string>anims/vaderAnim_05.png</string>
+				<string>anims/vaderAnim_06.png</string>
+			</array>
+		</dict>
+	</dict>
+	<key>frames</key>
+	<dict>
+		<key>anims/vaderAnim_01.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{0, 0}, {300, 350}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{300, 350}</string>
+			<key>sourceSize</key>
+			<string>{300, 350}</string>
+		</dict>
+		<key>anims/vaderAnim_02.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{300, 0}, {300, 350}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{300, 350}</string>
+			<key>sourceSize</key>
+			<string>{300, 350}</string>
+		</dict>
+		<key>anims/vaderAnim_03.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{600, 0}, {300, 350}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{300, 350}</string>
+			<key>sourceSize</key>
+			<string>{300, 350}</string>
+		</dict>
+		<key>anims/vaderAnim_04.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{900, 0}, {300, 350}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{300, 350}</string>
+			<key>sourceSize</key>
+			<string>{300, 350}</string>
+		</dict>
+		<key>anims/vaderAnim_05.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1200, 0}, {300, 350}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{300, 350}</string>
+			<key>sourceSize</key>
+			<string>{300, 350}</string>
+		</dict>
+		<key>anims/vaderAnim_06.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1500, 0}, {300, 350}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{300, 350}</string>
+			<key>sourceSize</key>
+			<string>{300, 350}</string>
+		</dict>
+	</dict>
+	<key>metadata</key>
+	<dict>
+		<key>format</key>
+		<integer>2</integer>
+		<key>size</key>
+		<string>{1800, 350}</string>
+	</dict>
+</dict>
+</plist>
+

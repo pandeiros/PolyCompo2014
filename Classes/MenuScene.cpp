@@ -1,5 +1,5 @@
 #include "MenuScene.h"
-#include "GameScene.h"
+#include "IntroScene.h"
 
 USING_NS_CC;
 
@@ -30,7 +30,7 @@ bool MenuScene::init () {
 
     // Config
     scheduleUpdate ();
-    mState = MainScene::MENU;
+    mState = States::S_MENU;
 
     // Bakcround
     mBackground = Sprite::create ("Background.png");
@@ -57,24 +57,13 @@ bool MenuScene::init () {
     mTitle->setPosition (visibleSize.width / 2.f, visibleSize.height - 150.f);
     this->addChild (mTitle, Layers::GUI);
 
-    // Stars
-    mStars = Sprite::create ("StarsLight.png");
-    mStarsLine = Sprite::create ("StarsLightLine.png");
-    mStars->setOpacity (0);
-    mStarsLine->setOpacity (0);
-    mStars->setPosition (855.f + mStars->getBoundingBox ().size.width / 2, 465.f);
-    mStarsLine->setPosition (855.f + mStars->getBoundingBox ().size.width / 2, 465.f);
-    this->addChild (mStarsLine, Layers::SECOND_PLAN);
-    this->addChild (mStars, Layers::SECOND_PLAN);
-
     return true;
 }
 
 // Update
 void MenuScene::update (float dt) {
     time += dt;
-    mStarsAnimTime += dt;
-
+   
     // Flashing start button
     if (time > 0.6f) {
         time = 0.f;
@@ -85,30 +74,6 @@ void MenuScene::update (float dt) {
             mStartButton->setNormalImage (Sprite::create ("ButtonFull.png"));
         }
         isStartActive = !isStartActive;
-    }
-
-    // Flashing stars
-    if (areStarsBright) {
-        int value = _MAX (0, 255 - (int)(mStarsAnimTime * 100.f));
-        
-        mStars->setOpacity (value);
-        mStarsLine->setOpacity (value);
-
-        if (value == 0) {
-            areStarsBright = false;
-            mStarsAnimTime = 0.f;
-        }
-    }
-    else {
-        int value = _MIN (255, (int)(mStarsAnimTime * 100.f));
-
-        mStars->setOpacity (value);
-        mStarsLine->setOpacity (value);
-        
-        if (value == 255) {
-            areStarsBright = true;
-            mStarsAnimTime = 0.f;           
-        }       
     }
 }
 
@@ -125,5 +90,5 @@ void MenuScene::onKeyReleased (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d:
 }
 
 void MenuScene::startGame () {
-    Director::getInstance ()->replaceScene (TransitionFade::create (1, GameScene::createScene (), Color3B (0, 0, 0)));
+    Director::getInstance ()->replaceScene (TransitionFade::create (1, IntroScene::createScene (), Color3B (0, 0, 0)));
 }
