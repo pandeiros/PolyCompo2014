@@ -24,6 +24,9 @@ public:
 
 private:
     bool isValid;
+    Movement::Directions direction;
+    int dx = 0;
+    int dy = 0;
 
 };
 

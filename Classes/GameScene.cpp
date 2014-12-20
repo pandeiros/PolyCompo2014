@@ -50,13 +50,17 @@ void GameScene::update (float dt) {
     mPlayer->move (mapKeysPressed[EventKeyboard::KeyCode::KEY_UP_ARROW] * Movement::UP |
                    mapKeysPressed[EventKeyboard::KeyCode::KEY_RIGHT_ARROW] * Movement::RIGHT |
                    mapKeysPressed[EventKeyboard::KeyCode::KEY_DOWN_ARROW] * Movement::DOWN |
-                   mapKeysPressed[EventKeyboard::KeyCode::KEY_LEFT_ARROW] * Movement::LEFT);
+                   mapKeysPressed[EventKeyboard::KeyCode::KEY_LEFT_ARROW] * Movement::LEFT,
+                   dt);
 
     // Missile update
     missilesUpdate (dt);
 
     // Enemy update
     enemiesUpdate (dt);
+
+    // Star update
+    starsUpdate (dt);
 }
 
 
@@ -122,6 +126,35 @@ void GameScene::enemiesUpdate (float dt) {
         }
         else {
             std::swap (vecEnemies[iEnemy], vecEnemies[vecEnemies.size () - 1]);
+            vecEnemies.pop_back ();
+        }
+    }
+}
+
+void GameScene::starsUpdate (float dt) {
+    int chance = rand () % Star::chance;
+    Size visibleSize = Director::getInstance ()->getVisibleSize ();
+
+    if (chance == 0) {
+        Star * star = Star::create (cocos2d::Vec2 (visibleSize.width * 1.1, 100 + rand () % (int)(visibleSize.height * 0.8)));
+        star->setScale (0.2f + (rand() % 8) / 10.f);
+        star->setOpacity (50 + (rand () % 200));
+        this->addChild (star, Layers::SECOND_PLAN);
+        vecStars.push_back (star);
+    }
+    for (unsigned int iStar = 0; iStar < vecStars.size (); ++iStar) {
+        if (vecStars[iStar] != nullptr) {
+            if (vecStars[iStar]->getIsValid ()) {
+
+                vecStars[iStar]->update (dt);
+            }
+            else {
+                if (vecStars[iStar]->getParent () != nullptr)
+                    vecStars[iStar]->getParent ()->removeChild (this);
+            }
+        }
+        else {
+            std::swap (vecStars[iStar], vecStars[vecStars.size () - 1]);
             vecEnemies.pop_back ();
         }
     }

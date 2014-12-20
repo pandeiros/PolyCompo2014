@@ -7,6 +7,7 @@
 #include "Missile.h"
 #include "Enemy.h"
 #include "EnumIDs.h"
+#include "Star.h";
 
 class GameScene : public MainScene {
 public:
@@ -28,10 +29,12 @@ public:
 private:
     void missilesUpdate (float dt);
     void enemiesUpdate (float dt);
+    void starsUpdate (float dt);
 
     Player * mPlayer;
     std::vector <Missile*> vecMissiles;
     std::vector <Enemy*> vecEnemies;
+    std::vector <Star*> vecStars;
 };
 
 #endif // GAME_SCENE

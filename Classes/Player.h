@@ -13,7 +13,7 @@ public:
 
     void initOptions ();
 
-    void move (unsigned int flags);
+    void move (unsigned int flags, float dt);
 
 
 };

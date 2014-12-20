@@ -23,9 +23,10 @@ Player* Player::create () {
 
 void Player::initOptions () {
     this->setPosition (400.f, 400.f);
+    this->setScale (0.15);
 }
 
-void Player::move (unsigned int flags) {
+void Player::move (unsigned int flags, float dt) {
     bool xOpposite = false, yOpposite = false;
 
     cocos2d::Vec2 newVec (((flags & Movement::RIGHT) != 0) -
@@ -45,6 +46,6 @@ void Player::move (unsigned int flags) {
             newVec.normalize ();
     }
 
-    this->setPosition (this->getPosition () + newVec * Movement::playerSpeed);
+    this->setPosition (this->getPosition () + newVec * Movement::playerSpeed * dt);
     
 }

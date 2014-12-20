@@ -39,7 +39,10 @@ namespace Movement {
         UL = 1 << 7
     };
 
-    static float playerSpeed = 10.f;
+    static float playerSpeed = 500.f;
+    static float missileSpeed = 1000.f;
+    static float enemySpeed = 300.f;
+    static float starSpeed = 10.f;
 }
 
 namespace Missiles{
@@ -56,9 +59,9 @@ namespace Enemies{
     };
 
     enum Difficulty {
-        EASY = 30,
-        MEDIUM = 20,
-        HARD = 10
+        EASY = 100,
+        MEDIUM = 70,
+        HARD = 30
     };
 }
 
