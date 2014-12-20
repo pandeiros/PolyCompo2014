@@ -46,5 +46,5 @@ void Player::move (unsigned int flags) {
     }
 
     this->setPosition (this->getPosition () + newVec * Movement::playerSpeed);
-    CCLOG ("%f , %f", newVec.x, newVec.y);
+    
 }

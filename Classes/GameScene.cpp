@@ -47,24 +47,39 @@ void GameScene::update (float dt) {
                    mapKeysPressed[EventKeyboard::KeyCode::KEY_DOWN_ARROW] * Movement::DOWN |
                    mapKeysPressed[EventKeyboard::KeyCode::KEY_LEFT_ARROW] * Movement::LEFT);
 
-    for (Missile * missile : vecMissiles) {
-        missile->update (dt);
+    for (unsigned int iMissile = 0; iMissile < vecMissiles.size (); ++iMissile) {
+        if (vecMissiles[iMissile] != nullptr) {
+            if (vecMissiles[iMissile]->getIsValid ()) {
+
+                vecMissiles[iMissile]->update (dt);
+            }
+            else {
+                if (vecMissiles[iMissile]->getParent () != nullptr)
+                    vecMissiles[iMissile]->getParent ()->removeChild (this);
+            }
+        }
+        else {
+            std::swap (vecMissiles[iMissile], vecMissiles[vecMissiles.size () - 1]);
+            vecMissiles.pop_back ();
+        }
     }
 }
 
 
 void GameScene::onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
     switch (keyCode) {
-        case EventKeyboard::KeyCode::KEY_ESCAPE : {
-            Director::getInstance ()->replaceScene (TransitionFade::create (1, MenuScene::createScene (), Color3B (0, 0, 0))); 
+        case EventKeyboard::KeyCode::KEY_ESCAPE: {
+            Director::getInstance ()->replaceScene (TransitionFade::create (1, MenuScene::createScene (), Color3B (0, 0, 0)));
             break;
         }
         case EventKeyboard::KeyCode::KEY_SPACE: {
-            vecMissiles.push_back (Missile::create(mPlayer->getPosition(),Missiles::M_WATERBALL, Movement::RIGHT));
+            Missile * missile = Missile::create (mPlayer->getPosition(), Missiles::M_WATERBALL, Movement::RIGHT);
+            vecMissiles.push_back (missile);
+            this->addChild (missile);
             break;
         }
     }
-    
+
     mapKeysPressed[keyCode] = true;
 }
 
