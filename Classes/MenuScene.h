@@ -27,10 +27,15 @@ private:
     cocos2d::MenuItemImage * mStartButton;
     cocos2d::Sprite * mWars;
     cocos2d::Sprite * mTitle;
+    cocos2d::Sprite * mStars;
+    cocos2d::Sprite * mStarsLine;
 
     void startGame ();
 
     bool isStartActive = false;
+    bool areStarsBright = false;
+
+    float mStarsAnimTime = 0.f;
 };
 
 #endif // GAME_SCENE
