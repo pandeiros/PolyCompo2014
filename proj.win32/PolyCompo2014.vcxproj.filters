@@ -25,6 +25,9 @@
     <Filter Include="Classes\Enemies">
       <UniqueIdentifier>{8df9e0ab-1ec6-40e1-a762-b2a75daa88a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\BodyCreator">
+      <UniqueIdentifier>{761c953e-1339-482a-83ac-40691c0a87a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -62,6 +65,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Star.cpp">
       <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BodyCreator.cpp">
+      <Filter>Classes\BodyCreator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Star.h">
       <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BodyCreator.h">
+      <Filter>Classes\BodyCreator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

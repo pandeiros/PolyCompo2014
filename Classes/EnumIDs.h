@@ -79,4 +79,15 @@ namespace Cutscenes {
     
 }
 
+namespace Entities {
+	enum Type
+	{
+		PLAYER_PROJECTTILE,
+		PLAYER,
+		ENEMY,
+		ENEMY_PROJECTTILE
+	};
+}
+
+
 #endif

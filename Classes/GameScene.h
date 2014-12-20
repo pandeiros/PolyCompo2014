@@ -26,6 +26,8 @@ public:
 
     virtual void onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
     virtual void onKeyReleased (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+	
+
 
 private:
     void missilesUpdate (float dt);
@@ -37,7 +39,7 @@ private:
     std::vector <Enemy*> vecEnemies;
     std::vector <Star*> vecStars;
 
-    b2World * world;
+ //   b2World * world;
 };
 
 #endif // GAME_SCENE

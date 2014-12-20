@@ -6,11 +6,13 @@ Player::Player () {
 Player::~Player () {
 }
 
-Player* Player::create () {
+Player* Player::create(cocos2d::Vec2 position) {
     Player* pSprite = new Player ();
+	pSprite->body = BodyCreator::createBody(Entities::PLAYER, b2Vec2(position.x / BodyCreator::PixelPerMeter, position.y / BodyCreator::PixelPerMeter));
 
     if (pSprite->initWithFile ("aquarius.png")) {
         pSprite->autorelease ();
+		pSprite->setPosition(position);
 
         pSprite->initOptions ();
 
@@ -22,7 +24,6 @@ Player* Player::create () {
 }
 
 void Player::initOptions () {
-    this->setPosition (400.f, 400.f);
     this->setScale (0.15);
 }
 
@@ -45,7 +46,8 @@ void Player::move (unsigned int flags, float dt) {
             ((flags & Movement::LEFT) || (flags & Movement::RIGHT)))
             newVec.normalize ();
     }
+	newVec *= Movement::playerSpeed * dt;
 
-    this->setPosition (this->getPosition () + newVec * Movement::playerSpeed * dt);
-    
+	body->SetTransform(body->GetPosition() + BodyCreator::convertToBoxVec(newVec), 0.f);
+    this->setPosition (this->getPosition() + newVec);
 }
