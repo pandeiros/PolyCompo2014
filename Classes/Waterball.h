@@ -6,16 +6,13 @@
 class Waterball : public cocos2d::Sprite
 {
 public:
-	// Cechy
-	int damage;
-	float missile_speed;
 
 	// Constructor & Destructor
 	Waterball();
 	~Waterball();
 
 	// Update
-	//virtual void update();
+	void update(float dt);
 
 	// Methods
 	static Waterball* create(cocos2d::Vec2 *position);

@@ -1,5 +1,6 @@
 #include "Waterball.h"
 
+const int SPEED = 1000;
 
 Waterball::Waterball()
 {
@@ -23,6 +24,10 @@ Waterball* Waterball::create(cocos2d::Vec2 *position) {
 
 	CC_SAFE_DELETE(wbSprite);
 	return NULL;
+}
+
+void Waterball::update(float dt){
+	this->setPosition(this->getPosition() + cocos2d::Vec2(SPEED*dt, 0));
 }
 
 void Waterball::initOptions(cocos2d::Vec2 *position){
