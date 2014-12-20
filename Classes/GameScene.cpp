@@ -27,26 +27,40 @@ bool GameScene::init () {
 
     // HERE STARTS THE MAGIC
     scheduleUpdate ();
-    mState = MainScene::GAME;
+    mState = States::S_GAME;
 
     mPlayer = Player::create ();
-    this->addChild (mPlayer, ENTITIES);
+    this->addChild (mPlayer, Layers::ENTITIES);
+
+    mapKeysPressed[EventKeyboard::KeyCode::KEY_UP_ARROW] = false;
+    mapKeysPressed[EventKeyboard::KeyCode::KEY_RIGHT_ARROW] = false;
+    mapKeysPressed[EventKeyboard::KeyCode::KEY_LEFT_ARROW] = false;
+    mapKeysPressed[EventKeyboard::KeyCode::KEY_DOWN_ARROW] = false;
 
     return true;
 }
 
 // Update
 void GameScene::update (float dt) {
+    //mapKeysPressed[EventKeyboard::KeyCode::KEY_RIGHT_ARROW] = true;
+    mPlayer->move (mapKeysPressed[EventKeyboard::KeyCode::KEY_UP_ARROW] * Movement::UP |
+                   mapKeysPressed[EventKeyboard::KeyCode::KEY_RIGHT_ARROW] * Movement::RIGHT |
+                   mapKeysPressed[EventKeyboard::KeyCode::KEY_DOWN_ARROW] * Movement::DOWN |
+                   mapKeysPressed[EventKeyboard::KeyCode::KEY_LEFT_ARROW] * Movement::LEFT);
 }
 
-void GameScene::onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
-    if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
-        Director::getInstance ()->replaceScene (TransitionFade::create (1, MenuScene::createScene (), Color3B (0, 0, 0)));
-    }
 
+void GameScene::onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
+    switch (keyCode) {
+        case EventKeyboard::KeyCode::KEY_ESCAPE : {
+            Director::getInstance ()->replaceScene (TransitionFade::create (1, MenuScene::createScene (), Color3B (0, 0, 0))); break;
+        }
+    }
+    
+    mapKeysPressed[keyCode] = true;
 }
 
 void GameScene::onKeyReleased (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
-
+    mapKeysPressed[keyCode] = false;
 }
 

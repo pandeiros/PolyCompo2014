@@ -45,6 +45,15 @@
     <ClCompile Include="..\Classes\Waterball.cpp">
       <Filter>Classes\Missiles</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\AnimatedSprite.cpp">
+      <Filter>Classes\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AnimationUtils.cpp">
+      <Filter>Classes\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\IntroScene.cpp">
+      <Filter>Classes\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -67,6 +76,18 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Waterball.h">
       <Filter>Classes\Missiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AnimatedSprite.h">
+      <Filter>Classes\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AnimationUtils.h">
+      <Filter>Classes\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\EnumIDs.h">
+      <Filter>Classes\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\IntroScene.h">
+      <Filter>Classes\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

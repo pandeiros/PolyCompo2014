@@ -9,7 +9,7 @@ Player::~Player () {
 Player* Player::create () {
     Player* pSprite = new Player ();
 
-    if (pSprite->initWithFile ("DeafStar.png")) {
+    if (pSprite->initWithFile ("aquarius.png")) {
         pSprite->autorelease ();
 
         pSprite->initOptions ();
@@ -23,4 +23,28 @@ Player* Player::create () {
 
 void Player::initOptions () {
     this->setPosition (400.f, 400.f);
+}
+
+void Player::move (unsigned int flags) {
+    bool xOpposite = false, yOpposite = false;
+
+    cocos2d::Vec2 newVec (((flags & Movement::RIGHT) != 0) -
+                          ((flags & Movement::LEFT) != 0),
+                          ((flags & Movement::UP) != 0) -
+                          ((flags & Movement::DOWN) != 0));
+
+    if ((flags & Movement::UP) && (flags & Movement::DOWN))
+        yOpposite = true;
+
+    if ((flags & Movement::LEFT) && (flags & Movement::RIGHT))
+        xOpposite = true;
+
+    if (!(xOpposite && yOpposite)) {
+        if (((flags & Movement::UP) || (flags & Movement::DOWN)) &&
+            ((flags & Movement::LEFT) || (flags & Movement::RIGHT)))
+            newVec.normalize ();
+    }
+
+    this->setPosition (this->getPosition () + newVec * Movement::playerSpeed);
+    CCLOG ("%f , %f", newVec.x, newVec.y);
 }

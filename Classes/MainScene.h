@@ -4,24 +4,13 @@
 #define _MAX(a,b) (((a) > (b)) ? (a) : (b))
 #define _MIN(a,b) (((a) < (b)) ? (a) : (b))
 
+#include <map>
 #include "cocos2d.h"
+#include "EnumIDs.h"
 
 class MainScene : public cocos2d::Layer {
 public:
-    enum StateID {
-        NONE,
-        GAME,
-        MENU
-    };
-
-    enum Layers {
-        BACKGROUND,
-        SECOND_PLAN,
-        GUI,
-        ENTITIES
-    };
-
-    // there's no 'id' in cpp, so we recommend returning the class instance pointer
+       // there's no 'id' in cpp, so we recommend returning the class instance pointer
     static cocos2d::Scene* createScene ();
 
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
@@ -41,14 +30,14 @@ public:
     virtual void onKeyReleased (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
     }
 
-
 protected:
     cocos2d::EventListenerKeyboard * mEventListener;
-    StateID mState;
+    States::SceneStates mState;
     cocos2d::Sprite * mBackground;
     
-    float time = 0;
+    float time = 0.f;
 
+    std::map <cocos2d::EventKeyboard::KeyCode, bool> mapKeysPressed;
 };
 
 #endif // GAME_SCENE
