@@ -74,16 +74,32 @@ namespace Cutscenes {
         _4_LABEL_TEXT_2 = 9,
         _5_LABEL_TEXT_3 = 13,
         _6_SHADER_INTRO = 17,
-        _7_DESTROYER_INTO = 22,
-        _8_DEAF_STAR = 26
+        _6a_SHADER_TEXT = 19,
+        _7_DESTROYER_INTRO = 25,
+        _7a_DESTROYER_TEXT = 27,
+        _8_DEAF_STAR = 33,
+        _9_LASER = 38
     };
 
     enum Menu {
         _0_MENU_INIT = 0,
-        _1_MOVE_TITLE = 3,
-        _2_SHOW_GUI = 5,
-        _3_BLINK_START_BUTTON = 6
+        _1_MOVE_TITLE = 2,
+        _2_SHOW_GUI = 4,
+        _3_BLINK_START_BUTTON = 5
     };
+
+    static std::string intro1 = "Once upon a time, in a not far away galaxy,";
+    static std::string intro2 = "there were Pisces, shining peacefully among the stars.";
+    static std::string intro3 = "But their days were not meant to last forever...";
+    static std::string intro4 = "Evil and meshed-up Dart Shader was planning to destroy";
+    static std::string intro5 = "what was left of this magnificent pisce of star alignment.";
+    static std::string intro6 = "Surrounded by his huge fleet of ThesTROYers, Dart Shader";
+    static std::string intro7 = "revealed the most powerful weapon in the entire universe...";
+    static std::string intro8 = "Deaf Star.";
+    static std::string intro9 = "...and torn Pisces into pieces.";
+    static std::string intro10 = "But the crown jewel of the space was not left unavenged.";
+    static std::string intro11 = "There was one last hope to end Dart Shader's madness...";
+    static std::string intro12 = "Aquarius.";
     
 }
 

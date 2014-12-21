@@ -1,5 +1,7 @@
 #include "AppDelegate.h"
 #include "MenuScene.h"
+// TEMP
+#include "IntroScene.h"
 
 USING_NS_CC;
 
@@ -31,7 +33,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     mMenuScene = MenuScene::createScene ();
 
     // run
-    director->runWithScene (TransitionFade::create (3, mMenuScene, Color3B (0, 0, 0)));
+    //director->runWithScene (TransitionFade::create (3, mMenuScene, Color3B (0, 0, 0)));
+    // TEMP
+    director->runWithScene (TransitionFade::create (2, IntroScene::createScene (), Color3B (0, 0, 0)));
 
     return true;
 }
