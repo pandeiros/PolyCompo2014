@@ -83,6 +83,7 @@ namespace Cutscenes {
         _9a_LASER_TEXT = 43,
         _10_FLASH = 46,
         _11_AQUARIUS = 51,
+        _12_CONTINUE = 57,
     };
 
     enum Menu {
@@ -104,6 +105,7 @@ namespace Cutscenes {
     static std::string intro10 = "But the crown jewel of the space was not left unavenged.";
     static std::string intro11 = "There was one last hope to end Dart Shader's madness...";
     static std::string intro12 = "Aquarius.";
+    static std::string intro13 = "                                                                                           press Enter to continue...";
     
 }
 

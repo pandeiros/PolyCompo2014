@@ -110,8 +110,8 @@ bool IntroScene::init () {
 
 // Update
 void IntroScene::update (float dt) {
-    time += dt;
-    currentFrameTime += dt;
+    time += animationSpeed * dt;
+    currentFrameTime += animationSpeed *  dt;
 
     switch (currentSceneFrame) {
         case Cutscenes::_1_SPRITE_PISCES: {
@@ -183,7 +183,7 @@ void IntroScene::update (float dt) {
         }
         case Cutscenes::_7_DESTROYER_INTRO: {
             fadeIn <Sprite> (mFleet, 2.f);
-            moveBy <Sprite> (mFleet, 2.f, Vec2 (20.f, 0.f), dt);
+            moveBy <Sprite> (mFleet, 2.f, Vec2 (20.f, 0.f), animationSpeed * dt);
             fadeOut <Label> (mLabelMiddle, 1.f);
             fadeOut <Label> (mLabelTop, 1.f);
             if ((int)time >= Cutscenes::_7a_DESTROYER_TEXT) {
@@ -200,7 +200,7 @@ void IntroScene::update (float dt) {
             break;
         }
         case Cutscenes::_7a_DESTROYER_TEXT: {
-            moveBy <Sprite> (mFleet, 6.f, Vec2 (60.f, 0.f), dt);
+            moveBy <Sprite> (mFleet, 6.f, Vec2 (60.f, 0.f), animationSpeed * dt);
             fadeIn <Label> (mLabelMiddle, 3.f);
             fadeIn <Label> (mLabelTop, 3.f);
             if ((int)time >= Cutscenes::_8_DEAF_STAR) {
@@ -214,8 +214,8 @@ void IntroScene::update (float dt) {
             fadeOut <Label> (mLabelTop, 1.f);
             fadeOut<Sprite> (mDartShader, 1.f);
             fadeIn <Label> (mLabelBottom, 3.f);
-            moveBy <Sprite> (mDeafStar, 8.f, Vec2 (395.f, 0.f), dt);
-            moveBy <Sprite> (mFleet, 8.f, Vec2 (80.f, 0.f), dt);
+            moveBy <Sprite> (mDeafStar, 8.f, Vec2 (395.f, 0.f), animationSpeed * dt);
+            moveBy <Sprite> (mFleet, 8.f, Vec2 (80.f, 0.f), animationSpeed * dt);
             if ((int)time >= Cutscenes::_9_LASER) {
                 mDeafStar->setTexture ("DeafStarRage.png");
                 currentSceneFrame = Cutscenes::_9_LASER;
@@ -225,7 +225,7 @@ void IntroScene::update (float dt) {
         }
         case Cutscenes::_9_LASER: {
             fadeIn<Sprite> (mLaser, 2.f);
-            moveBy <Sprite> (mFleet, 2.f, Vec2 (20.f, 0.f), dt);
+            moveBy <Sprite> (mFleet, 2.f, Vec2 (20.f, 0.f), animationSpeed * dt);
             fadeOut <Label> (mLabelBottom, 1.f);
             if ((int)time >= Cutscenes::_9a_LASER_TEXT) {
                 mLabelTop->setString (Cutscenes::intro10);
@@ -241,7 +241,7 @@ void IntroScene::update (float dt) {
             break;
         }
         case Cutscenes::_9a_LASER_TEXT: {
-            moveBy <Sprite> (mFleet, 5.f, Vec2 (50.f, 0.f), dt);
+            moveBy <Sprite> (mFleet, 5.f, Vec2 (50.f, 0.f), animationSpeed * dt);
             fadeIn <Label> (mLabelBottom, 2.f);
             fadeIn<Sprite> (mExplosion, 3.f);
             zoomIn (mExplosion, 3.f);
@@ -252,7 +252,7 @@ void IntroScene::update (float dt) {
             break;
         }
         case Cutscenes::_10_FLASH: {
-            moveBy <Sprite> (mFleet, 2.f, Vec2 (20.f, 0.f), dt);
+            moveBy <Sprite> (mFleet, 2.f, Vec2 (20.f, 0.f), animationSpeed * dt);
             fadeIn<Sprite> (mFlash, 2.f);
             if ((int)time >= Cutscenes::_11_AQUARIUS) {
                 mLabelBottom->setString (Cutscenes::intro12);
@@ -277,13 +277,19 @@ void IntroScene::update (float dt) {
             fadeIn <Label> (mLabelMiddle, 4.f);
             fadeIn <Label> (mLabelTop, 4.f);
             fadeIn <Label> (mLabelBottom, 4.f);
-            /*if ((int)time >= Cutscenes::_11_AQUARIUS) {
-                mLabelBottom->setString (Cutscenes::intro12);
+            if ((int)time >= Cutscenes::_12_CONTINUE) {
+                mLabelBottom->setString (Cutscenes::intro13);
                 mLabelBottom->setPosition (170 + mLabelBottom->getBoundingBox ().size.width / 2, 90);
 
-                currentSceneFrame = Cutscenes::_11_AQUARIUS;
+                currentSceneFrame = Cutscenes::_12_CONTINUE;
                 currentFrameTime = 0.f;
-            }*/
+            }
+            break;
+        }
+        case Cutscenes::_12_CONTINUE: {
+            fadeOut <Label> (mLabelMiddle, 1.f);
+            fadeOut <Label> (mLabelTop, 1.f);
+            fadeIn <Label> (mLabelBottom, 2.f);
             break;
         }
     }

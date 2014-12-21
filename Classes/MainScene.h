@@ -38,6 +38,8 @@ protected:
     float time = 0.f;
 
     std::map <cocos2d::EventKeyboard::KeyCode, bool> mapKeysPressed;
+
+    float const animationSpeed = 1.f;
 };
 
 #endif // GAME_SCENE
