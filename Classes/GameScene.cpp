@@ -111,6 +111,8 @@ void GameScene::update (float dt) {
 			boom += boom2;
 			pointsLabel->setString(boom);
 			mPlayer->setTexture("aquariusRage.png");
+			Missile * missile = Missile::create(mPlayer->getPosition(), Missiles::M_FIREBALL, Movement::RIGHT, world);
+			Missile * missile = Missile::create(Vec2(mPlayer->getPosition().x+30, mPlayer->getPosition().y+45), Missiles::M_WATERBALL, Movement::RIGHT, world);
 			*/
     }
 }
@@ -123,7 +125,7 @@ void GameScene::onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
             break;
         }
         case EventKeyboard::KeyCode::KEY_SPACE: {
-            Missile * missile = Missile::create (mPlayer->getPosition (), Missiles::M_WATERBALL, Movement::RIGHT, world);
+			Missile * missile = Missile::create(Vec2(mPlayer->getPosition().x+30, mPlayer->getPosition().y+45), Missiles::M_WATERBALL, Movement::RIGHT, world);
             vecMissiles.push_back (missile);
             this->addChild (missile, Layers::MISSILES);
             break;
