@@ -39,7 +39,10 @@ private:
     Player * mPlayer;
     std::vector <Missile*> vecMissiles;
     std::vector <Enemy *> vecEnemies;
-    std::vector <Star*> vecStars;
+    std::vector <Star *> vecStars;
+
+	cocos2d::LabelTTF * pointsLabel;
+	int points;
 
     b2World * world;
     ContactListener * CL;

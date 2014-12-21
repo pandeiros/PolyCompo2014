@@ -59,12 +59,24 @@ bool GameScene::init () {
         Star * star = Star::create (cocos2d::Vec2 (50.f + rand () % (int)(visibleSize.width), 50.f + rand () % (int)(visibleSize.height * 0.9f)));
         star->setScale (0.2f + (rand () % 6) / 10.f);
         star->setOpacity (50 + (rand () % 200));
-        this->addChild (star, Layers::SECOND_PLAN);
-        vecStars.push_back (star);
+        //this->addChild (star, Layers::SECOND_PLAN);
+		//vecStars.push_back (star);
     }
 
     CL = new ContactListener;
     world->SetContactListener (CL);
+
+	// Points
+	pointsLabel = LabelTTF::create();
+	points = 0;
+	std::string boom, boom2;
+	boom = "Points: ";
+	boom2 = std::to_string(points);
+	boom += boom2;
+	pointsLabel->setString(boom);
+	pointsLabel->setAnchorPoint(ccp(0, 0.f));
+	pointsLabel->setPosition(Vec2(0.f, 0.f));
+	this->addChild(pointsLabel, Layers::GUI);
 
     return true;
 }
@@ -92,12 +104,20 @@ void GameScene::update (float dt) {
     if (mPlayer->getIsDead ()) {
         if (mPlayer->getParent () != nullptr)
             mPlayer->getParent ()->removeChild (this);
+
+	// Obsluga punktow i enrage
+		/* boom = "Points: ";
+			boom2 = std::to_string(++points);
+			boom += boom2;
+			pointsLabel->setString(boom);
+			mPlayer->setTexture("aquariusRage.png");
+			*/
     }
 }
 
 
 void GameScene::onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
-    switch (keyCode) {
+	switch (keyCode) {
         case EventKeyboard::KeyCode::KEY_ESCAPE: {
             Director::getInstance ()->replaceScene (TransitionFade::create (1, MenuScene::createScene (), Color3B (0, 0, 0)));
             break;
