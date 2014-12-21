@@ -2,6 +2,9 @@
 #include <ctime>
 #include "GameScene.h"
 #include "MenuScene.h"
+#include "GLES-Render.h"
+#include <Box2D/Box2D.h>
+#include "B2DebugDrawLayer.h"
 
 USING_NS_CC;
 
@@ -29,6 +32,10 @@ bool GameScene::init () {
         return false;
     }
 
+    world = new b2World (b2Vec2 (0.f, 0.f));
+
+    this->addChild (new B2DebugDrawLayer (world, BodyCreator::PixelPerMeter), 9999999);
+
     // HERE STARTS THE MAGIC
     scheduleUpdate ();
     mState = States::S_GAME;
@@ -40,7 +47,7 @@ bool GameScene::init () {
     mBackground->setPosition (Vec2 (origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
     this->addChild (mBackground, Layers::BACKGROUND);
 
-    mPlayer = Player::create (Vec2(400.f,400.f));
+    mPlayer = Player::create (Vec2(400.f,400.f), world);
     this->addChild (mPlayer, Layers::PLAYER);
 
     mapKeysPressed[EventKeyboard::KeyCode::KEY_UP_ARROW] = false;
@@ -56,14 +63,15 @@ bool GameScene::init () {
         vecStars.push_back (star);
     }
 
-    BodyCreator::world->SetContactListener (new ContactListener);
+    CL = new ContactListener;
+    world->SetContactListener (CL);
 
     return true;
 }
 
 // Update
 void GameScene::update (float dt) {
-    updatePhysics (dt);
+    this->updatePhysics (dt);
 
     // Player update
     mPlayer->move (mapKeysPressed[EventKeyboard::KeyCode::KEY_UP_ARROW] * Movement::UP |
@@ -95,7 +103,7 @@ void GameScene::onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
             break;
         }
         case EventKeyboard::KeyCode::KEY_SPACE: {
-            Missile * missile = Missile::create (mPlayer->getPosition (), Missiles::M_WATERBALL, Movement::RIGHT);
+            Missile * missile = Missile::create (mPlayer->getPosition (), Missiles::M_WATERBALL, Movement::RIGHT, world);
             vecMissiles.push_back (missile);
             this->addChild (missile, Layers::MISSILES);
             break;
@@ -133,7 +141,7 @@ void GameScene::enemiesUpdate (float dt) {
     Size visibleSize = Director::getInstance ()->getVisibleSize ();
 
     if (chance == 0) {
-        Enemy * enemy = Enemy::create (cocos2d::Vec2(visibleSize.width * 1.5, 100 + rand() % (int)(visibleSize.height * 0.8)), Enemies::E_TIEFIGHTER, Movement::LEFT);
+        Enemy * enemy = Enemy::create (cocos2d::Vec2(visibleSize.width * 1.5, 100 + rand() % (int)(visibleSize.height * 0.8)), Enemies::E_TIEFIGHTER, Movement::LEFT, world);
         this->addChild (enemy, Layers::ENTITIES);
         vecEnemies.push_back (enemy);
     }
@@ -186,12 +194,12 @@ void GameScene::starsUpdate (float dt) {
 
 void GameScene::updatePhysics (float dt) {
     int velocityIterations = 8;
-    int positionIterations = 1;
+    int positionIterations = 3;
 
-    BodyCreator::world->Step (dt, velocityIterations, positionIterations);
+    world->Step (dt, velocityIterations, positionIterations);
 
     // Iterate over the bodies in the physics world
-    for (b2Body* b = BodyCreator::world->GetBodyList (); b; b = b->GetNext ()) {
+    for (b2Body* b = world->GetBodyList (); b; b = b->GetNext ()) {
         if (b->GetUserData () != NULL) {
             // Synchronize the sprites with bodies
             CCSprite* myActor = (CCSprite*)b->GetUserData ();

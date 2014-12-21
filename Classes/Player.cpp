@@ -6,9 +6,9 @@ Player::Player () {
 Player::~Player () {
 }
 
-Player* Player::create(cocos2d::Vec2 position) {
+Player* Player::create (cocos2d::Vec2 position, b2World * world) {
     Player* pSprite = new Player ();
-    pSprite->body = BodyCreator::createBody<Player>(Entities::PLAYER, BodyCreator::convertToBoxVec(position), pSprite);
+    pSprite->body = BodyCreator::createBody<Player>(Entities::PLAYER, BodyCreator::convertToBoxVec(position), pSprite, world);
     pSprite->type = Entities::PLAYER;
 
     if (pSprite->initWithFile ("aquarius.png")) {

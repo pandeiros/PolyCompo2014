@@ -17,7 +17,7 @@ public:
     void update(float dt);
 
     // Methods
-    static Missile* create(cocos2d::Vec2 position, Missiles::Type type, Movement::Directions direction);
+    static Missile* create (cocos2d::Vec2 position, Missiles::Type type, Movement::Directions direction, b2World * world);
 
     void initOptions(cocos2d::Vec2 position);
 

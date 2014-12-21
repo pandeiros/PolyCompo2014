@@ -8,7 +8,7 @@ Missile::Missile () {
 Missile::~Missile () {
 }
 
-Missile* Missile::create (cocos2d::Vec2 position, Missiles::Type type, Movement::Directions direction) {
+Missile* Missile::create (cocos2d::Vec2 position, Missiles::Type type, Movement::Directions direction, b2World * world) {
     Missile* missile = new Missile ();
     missile->direction = direction;
 
@@ -39,7 +39,7 @@ Missile* Missile::create (cocos2d::Vec2 position, Missiles::Type type, Movement:
             missile->dy = 1; break;
     }
 
-    missile->body = BodyCreator::createBody<Missile> (missile->type, BodyCreator::convertToBoxVec (position), missile);
+    missile->body = BodyCreator::createBody<Missile> (missile->type, BodyCreator::convertToBoxVec (position), missile, world);
 
     if (missile->initWithFile (filename)) {
         missile->autorelease ();
@@ -54,8 +54,8 @@ Missile* Missile::create (cocos2d::Vec2 position, Missiles::Type type, Movement:
 
 void Missile::update (float dt) {
 
-    this->setPosition (this->getPosition () + cocos2d::Vec2 (this->dx * Movement::missileSpeed * dt, this->dy * Movement::missileSpeed * dt));
-
+    //this->setPosition (this->getPosition () + cocos2d::Vec2 (this->dx * Movement::missileSpeed * dt, this->dy * Movement::missileSpeed * dt));
+    body->SetLinearVelocity (BodyCreator::convertToBoxVec (cocos2d::Vec2 (this->dx * Movement::missileSpeed * dt, this->dy * Movement::missileSpeed * dt)));
     if (this->getPosition ().x > 3000 || this->getPosition ().x < -1000) {
 
         this->isValid = false;

@@ -40,6 +40,9 @@ private:
     std::vector <Missile*> vecMissiles;
     std::vector <Enemy *> vecEnemies;
     std::vector <Star*> vecStars;
+
+    b2World * world;
+    ContactListener * CL;
 };
 
 #endif

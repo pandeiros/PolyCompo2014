@@ -11,7 +11,7 @@ public:
     Player ();
     ~Player ();
 
-    static Player* create (cocos2d::Vec2 position);
+    static Player* create (cocos2d::Vec2 position, b2World * world);
 
     void initOptions ();
 

@@ -11,12 +11,12 @@ public:
     BodyCreator();
     ~BodyCreator();
 
-    template <typename Type>
-    static b2Body* createBody (Entities::Type type, b2Vec2 position, Type * entity);
+    template <typename T>
+    static b2Body* createBody (Entities::Type type, b2Vec2 position, T* entity, b2World * world);
 
     static unsigned long globalId;
 
-    static const unsigned int PixelPerMeter = 100;
+    static float PixelPerMeter;
 
     static b2World * world;
 
@@ -29,8 +29,8 @@ public:
     }
 };
 
-template <typename Type>
-b2Body* BodyCreator::createBody (Entities::Type type, b2Vec2 position, Type * entity) {
+template <typename T>
+b2Body* BodyCreator::createBody (Entities::Type type, b2Vec2 position, T* entity, b2World * world) {
     b2BodyDef bodyDef;
     bodyDef.position = position;
     bodyDef.type = b2BodyType::b2_kinematicBody;
@@ -40,9 +40,8 @@ b2Body* BodyCreator::createBody (Entities::Type type, b2Vec2 position, Type * en
     body->SetUserData (entity);
 
     b2FixtureDef fixtureDef;
-    fixtureDef.density = 1.0;
-    fixtureDef.friction = 0.0;
-    fixtureDef.isSensor = true;
+    fixtureDef.density = 10.0;
+    fixtureDef.isSensor = false;
 
     b2PolygonShape * polyShape;
     polyShape = new b2PolygonShape;
@@ -55,16 +54,15 @@ b2Body* BodyCreator::createBody (Entities::Type type, b2Vec2 position, Type * en
 
             break;
         case Entities::PLAYER:
-            polyShape->SetAsBox (115.f / 2 / PixelPerMeter, 138.f / 2 / PixelPerMeter);
+            polyShape->SetAsBox (115.f / 2.f / PixelPerMeter, 138.f / 2.f / PixelPerMeter);
             break;
         case Entities::ENEMY:
-            polyShape->SetAsBox (112.f / 2 / PixelPerMeter, 55.f / 2 / PixelPerMeter);
+            polyShape->SetAsBox (112.f / 2.f / PixelPerMeter, 55.f / 2.f / PixelPerMeter);
             break;
         case Entities::DART:
 
             break;
     }
-    //polyShape->SetAsBox
 
     fixtureDef.shape = polyShape;
     body->CreateFixture (&fixtureDef);
