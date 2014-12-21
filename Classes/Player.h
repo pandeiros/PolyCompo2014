@@ -23,11 +23,19 @@ public:
         return isDead;
     }
 
+	void rageIncrease();
+
+	void setIsRage(const bool & rage);
+
+	bool getIsRage();
+	
 private:
     b2Body * body;
 
     int hp = 100;
+	int rage = 0;
     bool isDead = false;
+	bool isRage = false;
 };
 
 #endif

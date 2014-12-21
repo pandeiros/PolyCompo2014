@@ -58,3 +58,16 @@ void Player::damage (Damage::Type type) {
         isDead = true;
     }
 }
+
+void Player::setIsRage(const bool & rage){
+	isRage = rage;
+}
+
+bool Player::getIsRage(){
+	return rage;
+}
+
+
+
+
+
