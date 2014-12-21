@@ -77,6 +77,13 @@ namespace Cutscenes {
         _7_DESTROYER_INTO = 22,
         _8_DEAF_STAR = 26
     };
+
+    enum Menu {
+        _0_MENU_INIT = 0,
+        _1_MOVE_TITLE = 3,
+        _2_SHOW_GUI = 5,
+        _3_BLINK_START_BUTTON = 6
+    };
     
 }
 

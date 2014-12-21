@@ -37,25 +37,39 @@ bool MenuScene::init () {
     mBackground->setPosition (Vec2 (origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
     this->addChild (mBackground, Layers::BACKGROUND);
 
-    // Button
-    mStartButton = MenuItemImage::create ("ButtonEmpty.png", "ButtonFull.png", CC_CALLBACK_0 (MenuScene::startGame, this));
-    mStartButton->setPosition (visibleSize.width / 2.f, visibleSize.height / 2.f + mStartButton->getBoundingBox ().size.height / 2 - 140);
-    mStartButton->setScale (0.5f);
-   
+    // Buttons
+    mStart = MenuItemImage::create ("ButtonEmpty.png", "ButtonFull.png", CC_CALLBACK_0 (MenuScene::startGame, this));
+    mStart->setPosition (visibleSize.width / 2.f, visibleSize.height / 2.f + mStart->getBoundingBox ().size.height / 2 - 140);
+    mStart->setScale (0.5f);
+    mStart->setOpacity (0);
+
+    mCredits = MenuItemImage::create ("placeholder.png", "placeholder.png", CC_CALLBACK_0 (MenuScene::showCredits, this));
+    mCredits->setPosition (150.f,150.f);
+    mCredits->setOpacity (0);
+
+    mExit = MenuItemImage::create ("placeholder.png", "placeholder.png", CC_CALLBACK_0 (MenuScene::exitGame, this));
+    mExit->setPosition (visibleSize.width - 150.f, 150.f);
+    mExit->setOpacity (0);
+
     // "Wars" sprite
     mWars = Sprite::create ("Wars.png");
     mWars->setScale (0.5f);
-    mWars->setPosition (visibleSize.width / 2.f, visibleSize.height / 2.f - mWars->getBoundingBox().size.height / 2 - 115);
+    mWars->setPosition (visibleSize.width / 2.f, visibleSize.height / 2.f - mWars->getBoundingBox ().size.height / 2 - 115);
+    mWars->setOpacity (0);
     this->addChild (mWars, Layers::GUI);
 
-    mMenu = Menu::create (mStartButton, NULL);
+    mMenu = Menu::create (mStart, mCredits, mExit, NULL);
     mMenu->setPosition (Vec2::ZERO);
     this->addChild (mMenu, Layers::GUI);
-    
+
     // Title
-    mTitle = Sprite::create ("placeholder.png");
-    mTitle->setPosition (visibleSize.width / 2.f, visibleSize.height - 150.f);
+    mTitle = Sprite::create ("Title.png");
+    mTitle->setPosition (visibleSize.width / 2.f, visibleSize.height - 370.f);
     this->addChild (mTitle, Layers::GUI);
+
+    // Actions
+    moveTitle = MoveBy::create (2, Vec2 (0.f, 200.f));
+    showGUI = FadeIn::create (0.5);
 
     return true;
 }
@@ -63,17 +77,50 @@ bool MenuScene::init () {
 // Update
 void MenuScene::update (float dt) {
     time += dt;
-   
-    // Flashing start button
-    if (time > 0.6f) {
-        time = 0.f;
-        if (isStartActive) {
-            mStartButton->setNormalImage (Sprite::create ("ButtonEmpty.png"));
+    currentFrameTime += dt;
+
+    switch (currentSceneFrame) {
+        case Cutscenes::_0_MENU_INIT: {
+            if ((int)time >= Cutscenes::_1_MOVE_TITLE) {
+                currentSceneFrame = Cutscenes::_1_MOVE_TITLE;
+                currentFrameTime = 0.f;
+            }
+            break;
         }
-        else {
-            mStartButton->setNormalImage (Sprite::create ("ButtonFull.png"));
+        case Cutscenes::_1_MOVE_TITLE: {
+            moveBy<Sprite> (mTitle, 2.f, Vec2 (0.f, 150.f), dt);
+            if ((int)time >= Cutscenes::_2_SHOW_GUI) {
+                currentSceneFrame = Cutscenes::_2_SHOW_GUI;
+                currentFrameTime = 0.f;
+            }
+            break;
         }
-        isStartActive = !isStartActive;
+        case Cutscenes::_2_SHOW_GUI: {
+            fadeIn<MenuItem> (mStart, 0.5f);
+            fadeIn<MenuItem> (mCredits, 0.5f);
+            fadeIn<MenuItem> (mExit, 0.5f);
+            fadeIn<Sprite> (mWars, 0.5f);
+            if ((int)time >= Cutscenes::_3_BLINK_START_BUTTON) {
+                currentSceneFrame = Cutscenes::_3_BLINK_START_BUTTON;
+                currentFrameTime = 0.f;
+            }
+            break;
+        }
+
+        case Cutscenes::_3_BLINK_START_BUTTON: {
+            // Flashing start button
+            if (currentFrameTime > 0.6f) {
+                currentFrameTime = 0.f;
+                if (isStartActive) {
+                    mStart->setNormalImage (Sprite::create ("ButtonEmpty.png"));
+                }
+                else {
+                    mStart->setNormalImage (Sprite::create ("ButtonFull.png"));
+                }
+                isStartActive = !isStartActive;
+            }
+            break;
+        }
     }
 }
 
@@ -91,4 +138,12 @@ void MenuScene::onKeyReleased (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d:
 
 void MenuScene::startGame () {
     Director::getInstance ()->replaceScene (TransitionFade::create (1, IntroScene::createScene (), Color3B (0, 0, 0)));
+}
+
+void MenuScene::showCredits () {
+    //Director::getInstance ()->replaceScene (TransitionFade::create (1, CreditsScene::createScene (), Color3B (0, 0, 0)));
+}
+
+void MenuScene::exitGame () {
+    Director::getInstance ()->end ();
 }

@@ -59,8 +59,8 @@ bool GameScene::init () {
         Star * star = Star::create (cocos2d::Vec2 (50.f + rand () % (int)(visibleSize.width), 50.f + rand () % (int)(visibleSize.height * 0.9f)));
         star->setScale (0.2f + (rand () % 6) / 10.f);
         star->setOpacity (50 + (rand () % 200));
-        //this->addChild (star, Layers::SECOND_PLAN);
-		//vecStars.push_back (star);
+        this->addChild (star, Layers::SECOND_PLAN);
+		vecStars.push_back (star);
     }
 
     CL = new ContactListener;

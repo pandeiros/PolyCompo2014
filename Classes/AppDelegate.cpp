@@ -31,7 +31,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     mMenuScene = MenuScene::createScene ();
 
     // run
-    director->runWithScene (mMenuScene);
+    director->runWithScene (TransitionFade::create (3, mMenuScene, Color3B (0, 0, 0)));
 
     return true;
 }
