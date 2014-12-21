@@ -60,14 +60,17 @@
     <ClCompile Include="..\Classes\Missile.cpp">
       <Filter>Classes\Missiles</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Enemy.cpp">
-      <Filter>Classes\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Star.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\BodyCreator.cpp">
       <Filter>Classes\BodyCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Entity.cpp">
+      <Filter>Classes\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Enemy.cpp">
+      <Filter>Classes\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -104,14 +107,20 @@
     <ClInclude Include="..\Classes\Missile.h">
       <Filter>Classes\Missiles</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Enemy.h">
-      <Filter>Classes\Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Star.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\BodyCreator.h">
       <Filter>Classes\BodyCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ContactListener.h">
+      <Filter>Classes\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Entity.h">
+      <Filter>Classes\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Enemy.h">
+      <Filter>Classes\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

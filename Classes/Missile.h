@@ -3,11 +3,12 @@
 
 #include "cocos2d.h"
 #include "EnumIDs.h"
+#include "BodyCreator.h"
+#include "Entity.h"
 
-class Missile : public cocos2d::Sprite
+class Missile : public Entity
 {
 public:
-
     // Constructor & Destructor
     Missile();
     ~Missile();
@@ -21,12 +22,17 @@ public:
     void initOptions(cocos2d::Vec2 position);
 
     bool getIsValid ();
+    void setInvalid () {
+        isValid = false;
+    }
 
 private:
     bool isValid;
     Movement::Directions direction;
     int dx = 0;
     int dy = 0;
+
+    b2Body * body;
 
 };
 

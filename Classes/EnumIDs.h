@@ -39,16 +39,17 @@ namespace Movement {
         UL = 1 << 7
     };
 
-    static float playerSpeed = 400.f;
-    static float missileSpeed = 1000.f;
-    static float enemySpeed = 200.f;
+    static float playerSpeed = 40000.f;
+    static float missileSpeed = 100000.f;
+    static float enemySpeed = 20000.f;
     static float starSpeed = 10.f;
 }
 
 namespace Missiles{
     enum Type{
-        M_WATERBALL = 0,
-        M_ENEMYS_BALL = 1
+        M_WATERBALL,
+        M_FIREBALL,
+        M_ENEMYS_BALL
     };
 }
 
@@ -80,13 +81,23 @@ namespace Cutscenes {
 }
 
 namespace Entities {
-	enum Type
-	{
-		PLAYER_PROJECTTILE,
-		PLAYER,
-		ENEMY,
-		ENEMY_PROJECTTILE
-	};
+    enum Type {
+        WATERBALL,
+        FIREBALL,
+        DART,
+        PLAYER,
+        ENEMY,
+    };
+}
+
+namespace Damage {
+    enum Type {
+        WATERBALL_DMG = 20,
+        FIREBALL_DMG = 50,
+        ENEMY_DMG = 30,
+        ENEMY_PROJ_DMG = 5,
+        FATAL = 1000
+    };
 }
 
 

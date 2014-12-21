@@ -15,10 +15,16 @@ Missile* Missile::create (cocos2d::Vec2 position, Missiles::Type type, Movement:
     std::string filename = "";
     switch (type) {
         case Missiles::M_WATERBALL:
-            filename = "WB_placeholder.png";
+            filename = "waterball.png";
+            missile->type = Entities::WATERBALL;
+            break;
+        case Missiles::M_FIREBALL:
+            filename = "fireball.png";
+            missile->type = Entities::FIREBALL;
             break;
         case Missiles::M_ENEMYS_BALL:
             filename = "EnemyProjectile";
+            missile->type = Entities::DART;
             break;
     }
 
@@ -32,6 +38,8 @@ Missile* Missile::create (cocos2d::Vec2 position, Missiles::Type type, Movement:
         case Movement::UP:
             missile->dy = 1; break;
     }
+
+    missile->body = BodyCreator::createBody<Missile> (missile->type, BodyCreator::convertToBoxVec (position), missile);
 
     if (missile->initWithFile (filename)) {
         missile->autorelease ();

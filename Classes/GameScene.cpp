@@ -32,7 +32,13 @@ bool GameScene::init () {
     // HERE STARTS THE MAGIC
     scheduleUpdate ();
     mState = States::S_GAME;
+    Vec2 origin = Director::getInstance ()->getVisibleOrigin ();
     Size visibleSize = Director::getInstance ()->getVisibleSize ();
+
+    // Background
+    mBackground = Sprite::create ("gameBackground.png");
+    mBackground->setPosition (Vec2 (origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
+    this->addChild (mBackground, Layers::BACKGROUND);
 
     mPlayer = Player::create (Vec2(400.f,400.f));
     this->addChild (mPlayer, Layers::PLAYER);
@@ -50,11 +56,15 @@ bool GameScene::init () {
         vecStars.push_back (star);
     }
 
+    BodyCreator::world->SetContactListener (new ContactListener);
+
     return true;
 }
 
 // Update
 void GameScene::update (float dt) {
+    updatePhysics (dt);
+
     // Player update
     mPlayer->move (mapKeysPressed[EventKeyboard::KeyCode::KEY_UP_ARROW] * Movement::UP |
                    mapKeysPressed[EventKeyboard::KeyCode::KEY_RIGHT_ARROW] * Movement::RIGHT |
@@ -70,6 +80,11 @@ void GameScene::update (float dt) {
 
     // Star update
     starsUpdate (dt);
+
+    if (mPlayer->getIsDead ()) {
+        if (mPlayer->getParent () != nullptr)
+            mPlayer->getParent ()->removeChild (this);
+    }
 }
 
 
@@ -124,7 +139,7 @@ void GameScene::enemiesUpdate (float dt) {
     }
     for (unsigned int iEnemy = 0; iEnemy < vecEnemies.size (); ++iEnemy) {
         if (vecEnemies[iEnemy] != nullptr) {
-            if (vecEnemies[iEnemy]->getIsValid ()) {
+            if (vecEnemies[iEnemy]->getIsValid () && !vecEnemies[iEnemy]->getIsDead()) {
 
                 vecEnemies[iEnemy]->update (dt);
             }
@@ -165,6 +180,23 @@ void GameScene::starsUpdate (float dt) {
         else {
             std::swap (vecStars[iStar], vecStars[vecStars.size () - 1]);
             vecEnemies.pop_back ();
+        }
+    }
+}
+
+void GameScene::updatePhysics (float dt) {
+    int velocityIterations = 8;
+    int positionIterations = 1;
+
+    BodyCreator::world->Step (dt, velocityIterations, positionIterations);
+
+    // Iterate over the bodies in the physics world
+    for (b2Body* b = BodyCreator::world->GetBodyList (); b; b = b->GetNext ()) {
+        if (b->GetUserData () != NULL) {
+            // Synchronize the sprites with bodies
+            CCSprite* myActor = (CCSprite*)b->GetUserData ();
+            myActor->setPosition (CCPointMake (b->GetPosition ().x * BodyCreator::PixelPerMeter, b->GetPosition ().y * BodyCreator::PixelPerMeter));
+            myActor->setRotation (-1 * CC_RADIANS_TO_DEGREES (b->GetAngle ()));
         }
     }
 }

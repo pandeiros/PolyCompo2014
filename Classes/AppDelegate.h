@@ -39,7 +39,7 @@ public:
 
 private:
     // Game title
-    std::string mGameTitle = "Why fishes do not live in space?";
+    std::string mGameTitle = "If You Want Pisces, Prepare For War!";
 
     // Scenes
     cocos2d::Scene * mMenuScene;

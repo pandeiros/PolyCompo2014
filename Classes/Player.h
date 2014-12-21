@@ -4,8 +4,9 @@
 #include "cocos2d.h"
 #include "EnumIDs.h"
 #include "BodyCreator.h"
+#include "Entity.h"
 
-class Player : public cocos2d::Sprite {
+class Player : public Entity {
 public:
     Player ();
     ~Player ();
@@ -16,8 +17,17 @@ public:
 
     void move (unsigned int flags, float dt);
 
+    void damage (Damage::Type type);
+
+    bool getIsDead () {
+        return isDead;
+    }
+
 private:
-	b2Body * body;
+    b2Body * body;
+
+    int hp = 100;
+    bool isDead = false;
 };
 
 #endif
