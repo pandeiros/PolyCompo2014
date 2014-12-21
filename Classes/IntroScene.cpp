@@ -30,6 +30,7 @@ bool IntroScene::init () {
     // HERE STARTS THE MAGIC
     scheduleUpdate ();
     mState = States::S_INTRO;
+    //time = Cutscenes::_8_DEAF_STAR;
 
     Vec2 origin = Director::getInstance ()->getVisibleOrigin ();
     Size visibleSize = Director::getInstance ()->getVisibleSize ();
@@ -46,33 +47,63 @@ bool IntroScene::init () {
     mStarsLine->setOpacity (0);
     mStars->setPosition (855.f + mStars->getBoundingBox ().size.width / 2, 465.f);
     mStarsLine->setPosition (855.f + mStars->getBoundingBox ().size.width / 2, 465.f);
-    this->addChild (mStarsLine, Layers::SECOND_PLAN);
+    this->addChild (mStarsLine, Layers::FRONT);
     this->addChild (mStars, Layers::SECOND_PLAN);
 
     // Bad guys
     mDartShader = AnimatedSprite::create ("vaderAnim");
     mDartShader->setOpacity (0);
     mDartShader->setPosition (300.f, 500.f);
-    this->addChild (mDartShader, 3);
+    this->addChild (mDartShader, Layers::ENTITIES);
+
+    mDeafStar = Sprite::create ("DeafStar.png");
+    mDeafStar->setPosition (-150.f, 319.f);
+    this->addChild (mDeafStar, Layers::ENTITIES);
+
+    // Laser
+    mLaser = Sprite::create ("DeafStarLasers.png");
+    mLaser->setOpacity (0);
+    mLaser->setAnchorPoint (Vec2 (0.f, 0.f));
+    mLaser->setPosition (155.f, 225.f);
+    mDeafStar->addChild (mLaser, Layers::FRONT);
+
+    // Explosion
+    mExplosion = Sprite::create ("Explosion.png");
+    mExplosion->setOpacity (0);
+    mExplosion->setPosition (265.f, 225.f);
+    mStarsLine->addChild (mExplosion, Layers::FRONT);
+
+    mFlash = Sprite::create ("flash.png");
+    mFlash->setOpacity (0);
+    mFlash->setAnchorPoint (Vec2 (0.f, 0.f));
+    mFlash->setPosition (0.f, 0.f);
+    this->addChild (mFlash, Layers::FRONT);
+
+    // Fleet
+    mFleet = Sprite::create ("desTroyArrsFleet.png");
+    mFleet->setOpacity (0);
+    mFleet->setPosition (400.f, 400.f);
+    this->addChild (mFleet, Layers::SECOND_PLAN);
+
 
     // Labels
     mLabelPisces = Label::createWithTTF ("Pisces", "fonts/DKCoolCrayon.ttf", 20.f);
-    mLabelPisces->setPosition (visibleSize.width / 2 + 300, visibleSize.height / 2 + 135);
+    mLabelPisces->setPosition (visibleSize.width / 2 + 300, visibleSize.height / 2 + 125);
     mLabelPisces->setOpacity (0);
-    this->addChild (mLabelPisces);
+    this->addChild (mLabelPisces, Layers::GUI);
 
-    mLabelTop = Label::createWithTTF (Cutscenes::intro1, "fonts/DKCoolCrayon.ttf", 25.f);
-    mLabelMiddle = Label::createWithTTF (Cutscenes::intro2, "fonts/DKCoolCrayon.ttf", 25.f);
-    mLabelBottom = Label::createWithTTF (Cutscenes::intro3, "fonts/DKCoolCrayon.ttf", 25.f);
-    mLabelTop->setPosition (150 + mLabelTop->getBoundingBox().size.width / 2, 200);
-    mLabelMiddle->setPosition (160 + mLabelMiddle->getBoundingBox ().size.width / 2, 170);
-    mLabelBottom->setPosition (170 + mLabelBottom->getBoundingBox ().size.width / 2, 140);
+    mLabelTop = Label::createWithTTF (Cutscenes::intro1, "fonts/TaraType.ttf", 25.f);
+    mLabelMiddle = Label::createWithTTF (Cutscenes::intro2, "fonts/TaraType.ttf", 25.f);
+    mLabelBottom = Label::createWithTTF (Cutscenes::intro3, "fonts/TaraType.ttf", 25.f);
+    mLabelTop->setPosition (150 + mLabelTop->getBoundingBox ().size.width / 2, 150);
+    mLabelMiddle->setPosition (160 + mLabelMiddle->getBoundingBox ().size.width / 2, 120);
+    mLabelBottom->setPosition (170 + mLabelBottom->getBoundingBox ().size.width / 2, 90);
     mLabelTop->setOpacity (0);
     mLabelMiddle->setOpacity (0);
     mLabelBottom->setOpacity (0);
-    this->addChild (mLabelTop);
-    this->addChild (mLabelMiddle);
-    this->addChild (mLabelBottom);
+    this->addChild (mLabelTop, Layers::GUI);
+    this->addChild (mLabelMiddle, Layers::GUI);
+    this->addChild (mLabelBottom, Layers::GUI);
 
     return true;
 }
@@ -133,34 +164,35 @@ void IntroScene::update (float dt) {
             if ((int)time >= Cutscenes::_6a_SHADER_TEXT) {
                 mLabelTop->setString (Cutscenes::intro4);
                 mLabelMiddle->setString (Cutscenes::intro5);
-                mLabelTop->setPosition (150 + mLabelTop->getBoundingBox ().size.width / 2, 200);
-                mLabelMiddle->setPosition (160 + mLabelMiddle->getBoundingBox ().size.width / 2, 170);
+                mLabelTop->setPosition (150 + mLabelTop->getBoundingBox ().size.width / 2, 150);
+                mLabelMiddle->setPosition (160 + mLabelMiddle->getBoundingBox ().size.width / 2, 120);
 
                 currentSceneFrame = Cutscenes::_6a_SHADER_TEXT;
                 currentFrameTime = 0.f;
             }
             break;
         }
-        case Cutscenes::_6a_SHADER_TEXT: {          
+        case Cutscenes::_6a_SHADER_TEXT: {
             fadeIn <Label> (mLabelMiddle, 4.f);
             fadeIn <Label> (mLabelTop, 4.f);
-            if ((int)time >= Cutscenes::_7_DESTROYER_INTRO) {               
+            if ((int)time >= Cutscenes::_7_DESTROYER_INTRO) {
                 currentSceneFrame = Cutscenes::_7_DESTROYER_INTRO;
                 currentFrameTime = 0.f;
             }
             break;
         }
         case Cutscenes::_7_DESTROYER_INTRO: {
-            // TODO Show fleet
+            fadeIn <Sprite> (mFleet, 2.f);
+            moveBy <Sprite> (mFleet, 2.f, Vec2 (20.f, 0.f), dt);
             fadeOut <Label> (mLabelMiddle, 1.f);
             fadeOut <Label> (mLabelTop, 1.f);
             if ((int)time >= Cutscenes::_7a_DESTROYER_TEXT) {
                 mLabelTop->setString (Cutscenes::intro6);
                 mLabelMiddle->setString (Cutscenes::intro7);
                 mLabelBottom->setString (Cutscenes::intro8);
-                mLabelTop->setPosition (150 + mLabelTop->getBoundingBox ().size.width / 2, 200);
-                mLabelMiddle->setPosition (160 + mLabelMiddle->getBoundingBox ().size.width / 2, 170);
-                mLabelBottom->setPosition (170 + mLabelBottom->getBoundingBox ().size.width / 2, 140);
+                mLabelTop->setPosition (150 + mLabelTop->getBoundingBox ().size.width / 2, 150);
+                mLabelMiddle->setPosition (160 + mLabelMiddle->getBoundingBox ().size.width / 2, 120);
+                mLabelBottom->setPosition (170 + mLabelBottom->getBoundingBox ().size.width / 2, 90);
 
                 currentSceneFrame = Cutscenes::_7a_DESTROYER_TEXT;
                 currentFrameTime = 0.f;
@@ -168,8 +200,9 @@ void IntroScene::update (float dt) {
             break;
         }
         case Cutscenes::_7a_DESTROYER_TEXT: {
-            fadeIn <Label> (mLabelMiddle, 4.f);
-            fadeIn <Label> (mLabelTop, 4.f);
+            moveBy <Sprite> (mFleet, 6.f, Vec2 (60.f, 0.f), dt);
+            fadeIn <Label> (mLabelMiddle, 3.f);
+            fadeIn <Label> (mLabelTop, 3.f);
             if ((int)time >= Cutscenes::_8_DEAF_STAR) {
                 currentSceneFrame = Cutscenes::_8_DEAF_STAR;
                 currentFrameTime = 0.f;
@@ -179,19 +212,78 @@ void IntroScene::update (float dt) {
         case Cutscenes::_8_DEAF_STAR: {
             fadeOut <Label> (mLabelMiddle, 1.f);
             fadeOut <Label> (mLabelTop, 1.f);
+            fadeOut<Sprite> (mDartShader, 1.f);
             fadeIn <Label> (mLabelBottom, 3.f);
+            moveBy <Sprite> (mDeafStar, 8.f, Vec2 (395.f, 0.f), dt);
+            moveBy <Sprite> (mFleet, 8.f, Vec2 (80.f, 0.f), dt);
             if ((int)time >= Cutscenes::_9_LASER) {
+                mDeafStar->setTexture ("DeafStarRage.png");
                 currentSceneFrame = Cutscenes::_9_LASER;
                 currentFrameTime = 0.f;
             }
             break;
         }
         case Cutscenes::_9_LASER: {
+            fadeIn<Sprite> (mLaser, 2.f);
+            moveBy <Sprite> (mFleet, 2.f, Vec2 (20.f, 0.f), dt);
+            fadeOut <Label> (mLabelBottom, 1.f);
+            if ((int)time >= Cutscenes::_9a_LASER_TEXT) {
+                mLabelTop->setString (Cutscenes::intro10);
+                mLabelMiddle->setString (Cutscenes::intro11);
+                mLabelBottom->setString (Cutscenes::intro9);
+                mLabelTop->setPosition (150 + mLabelTop->getBoundingBox ().size.width / 2, 150);
+                mLabelMiddle->setPosition (160 + mLabelMiddle->getBoundingBox ().size.width / 2, 120);
+                mLabelBottom->setPosition (170 + mLabelBottom->getBoundingBox ().size.width / 2, 90);
 
-            if ((int)time >= Cutscenes::_9_LASER) {
-                currentSceneFrame = Cutscenes::_9_LASER;
+                currentSceneFrame = Cutscenes::_9a_LASER_TEXT;
                 currentFrameTime = 0.f;
             }
+            break;
+        }
+        case Cutscenes::_9a_LASER_TEXT: {
+            moveBy <Sprite> (mFleet, 5.f, Vec2 (50.f, 0.f), dt);
+            fadeIn <Label> (mLabelBottom, 2.f);
+            fadeIn<Sprite> (mExplosion, 3.f);
+            zoomIn (mExplosion, 3.f);
+            if ((int)time >= Cutscenes::_10_FLASH) {
+                currentSceneFrame = Cutscenes::_10_FLASH;
+                currentFrameTime = 0.f;
+            }
+            break;
+        }
+        case Cutscenes::_10_FLASH: {
+            moveBy <Sprite> (mFleet, 2.f, Vec2 (20.f, 0.f), dt);
+            fadeIn<Sprite> (mFlash, 2.f);
+            if ((int)time >= Cutscenes::_11_AQUARIUS) {
+                mLabelBottom->setString (Cutscenes::intro12);
+                mLabelBottom->setPosition (170 + mLabelBottom->getBoundingBox ().size.width / 2, 90);
+                mBackground->setTexture ("gameBackground.png");
+
+                currentSceneFrame = Cutscenes::_11_AQUARIUS;
+                currentFrameTime = 0.f;
+            }
+            break;
+        }
+        case Cutscenes::_11_AQUARIUS: {
+            fadeOut<Sprite> (mFlash, 1.f);
+            mStars->setOpacity (0); 
+            mStarsLine->setOpacity (0);
+            mLabelPisces->setOpacity (0);
+            mDartShader->setOpacity (0);
+            mDeafStar->setOpacity (0);
+            mLaser->setOpacity (0);
+            mExplosion->setOpacity (0);
+            mFleet->setOpacity (0);
+            fadeIn <Label> (mLabelMiddle, 4.f);
+            fadeIn <Label> (mLabelTop, 4.f);
+            fadeIn <Label> (mLabelBottom, 4.f);
+            /*if ((int)time >= Cutscenes::_11_AQUARIUS) {
+                mLabelBottom->setString (Cutscenes::intro12);
+                mLabelBottom->setPosition (170 + mLabelBottom->getBoundingBox ().size.width / 2, 90);
+
+                currentSceneFrame = Cutscenes::_11_AQUARIUS;
+                currentFrameTime = 0.f;
+            }*/
             break;
         }
     }
@@ -199,7 +291,7 @@ void IntroScene::update (float dt) {
 
 void IntroScene::onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
     switch (keyCode) {
-        case EventKeyboard::KeyCode::KEY_ENTER: case EventKeyboard::KeyCode::KEY_KP_ENTER : {
+        case EventKeyboard::KeyCode::KEY_ENTER: case EventKeyboard::KeyCode::KEY_KP_ENTER: {
             Director::getInstance ()->replaceScene (TransitionFade::create (2, GameScene::createScene (), Color3B (0, 0, 0))); break;
         }
         case EventKeyboard::KeyCode::KEY_ESCAPE: {

@@ -31,6 +31,10 @@ private:
     // Bad guys
     AnimatedSprite * mDartShader;
     cocos2d::Sprite * mDeafStar;
+    cocos2d::Sprite * mLaser;
+    cocos2d::Sprite * mExplosion;
+    cocos2d::Sprite * mFlash;
+    cocos2d::Sprite * mFleet;
 
     // Labels
     cocos2d::Label * mLabelTop;
@@ -53,6 +57,13 @@ private:
 
     void zoomIn (cocos2d::Sprite * sprite, float duration) {
         sprite->setScale (_MIN (1, currentFrameTime / duration * 1.f));
+    }
+
+    template <class Type>
+    void moveBy (Type * object, float duration, cocos2d::Vec2 vec, float dt) {
+        if (currentFrameTime <= duration) {
+            object->setPosition (object->getPosition () + vec * dt / duration);
+        }
     }
 };
 

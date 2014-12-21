@@ -9,7 +9,8 @@ namespace Layers {
         ENTITIES,
         MISSILES,
         PICKUPS,
-        PLAYER
+        PLAYER,
+        FRONT
     };
 }
 
@@ -78,7 +79,10 @@ namespace Cutscenes {
         _7_DESTROYER_INTRO = 25,
         _7a_DESTROYER_TEXT = 27,
         _8_DEAF_STAR = 33,
-        _9_LASER = 38
+        _9_LASER = 41,
+        _9a_LASER_TEXT = 43,
+        _10_FLASH = 46,
+        _11_AQUARIUS = 51,
     };
 
     enum Menu {
@@ -93,10 +97,10 @@ namespace Cutscenes {
     static std::string intro3 = "But their days were not meant to last forever...";
     static std::string intro4 = "Evil and meshed-up Dart Shader was planning to destroy";
     static std::string intro5 = "what was left of this magnificent pisce of star alignment.";
-    static std::string intro6 = "Surrounded by his huge fleet of ThesTROYers, Dart Shader";
+    static std::string intro6 = "Surrounded by his huge fleet of desTroyARRRs, Dart Shader";
     static std::string intro7 = "revealed the most powerful weapon in the entire universe...";
     static std::string intro8 = "Deaf Star.";
-    static std::string intro9 = "...and torn Pisces into pieces.";
+    static std::string intro9 = "            ...and torn Pisces into pieces.";
     static std::string intro10 = "But the crown jewel of the space was not left unavenged.";
     static std::string intro11 = "There was one last hope to end Dart Shader's madness...";
     static std::string intro12 = "Aquarius.";
