@@ -280,6 +280,7 @@ void IntroScene::update (float dt) {
             if ((int)time >= Cutscenes::_12_CONTINUE) {
                 mLabelBottom->setString (Cutscenes::intro13);
                 mLabelBottom->setPosition (170 + mLabelBottom->getBoundingBox ().size.width / 2, 90);
+                mLabelBottom->setOpacity (0);
 
                 currentSceneFrame = Cutscenes::_12_CONTINUE;
                 currentFrameTime = 0.f;
@@ -287,8 +288,8 @@ void IntroScene::update (float dt) {
             break;
         }
         case Cutscenes::_12_CONTINUE: {
-            fadeOut <Label> (mLabelMiddle, 1.f);
-            fadeOut <Label> (mLabelTop, 1.f);
+            fadeOut <Label> (mLabelMiddle, 0.5f);
+            fadeOut <Label> (mLabelTop, 0.5f);
             fadeIn <Label> (mLabelBottom, 2.f);
             break;
         }
