@@ -34,7 +34,8 @@ bool GameScene::init () {
 
     world = new b2World (b2Vec2 (0.f, 0.f));
 
-    this->addChild (new B2DebugDrawLayer (world, BodyCreator::PixelPerMeter), 9999999);
+    // WARNING Following line temp to cause critical errors
+    //this->addChild (new B2DebugDrawLayer (world, BodyCreator::PixelPerMeter), 9999999);
 
     // HERE STARTS THE MAGIC
     scheduleUpdate ();
