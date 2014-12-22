@@ -24,17 +24,19 @@ public:
     }
 
 	void rageIncrease();
-
+	void resetRage();
 	void setIsRage(const bool & rage);
-
+	bool rageController();
 	bool getIsRage();
 	
 private:
     b2Body * body;
 
-    int hp = 100;
+
+	int hp = 100;
 	int rage = 0;
-    bool isDead = false;
+	int rageTimer = 0;
+	bool isDead = false;
 	bool isRage = false;
 };
 

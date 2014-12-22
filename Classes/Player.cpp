@@ -60,11 +60,45 @@ void Player::damage (Damage::Type type) {
 }
 
 void Player::setIsRage(const bool & rage){
+	if (isRage != rage){
+		if (rage)
+			setTexture("aquariusRage.png");
+		else{
+			setTexture("aquarius.png");
+			resetRage();
+			rageTimer = 0;
+		}
+	}
 	isRage = rage;
+
 }
 
 bool Player::getIsRage(){
-	return rage;
+	return isRage;
+}
+
+void Player::rageIncrease(){
+	if (!isRage){
+		
+		++rage;
+
+		if (rage == 10)
+		{
+			resetRage();
+			setIsRage(true);
+		}
+	}
+}
+
+void Player::resetRage(){
+	rage = 0;
+}
+
+bool Player::rageController(){
+	if (++rageTimer < 300)
+		return true;
+	setIsRage(false);
+	return false;
 }
 
 
