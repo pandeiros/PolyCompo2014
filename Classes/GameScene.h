@@ -45,9 +45,11 @@ private:
     std::vector <Star *> vecStars;
 
 	cocos2d::Label * pointsLabel;
-    Enemies::Difficulty currentDifficulty = Enemies::EASY;
+    Enemies::Difficulty currentDifficulty = Enemies::MEDIUM;
 	int points = 0;
-    float rageTime = 0,f;
+    float rageTime = 0.f;
+    float shootingTime = 0.f;
+    bool isGameOver = false;
 
     cocos2d::Sprite * mHpBarBorder;
     cocos2d::Sprite * mRageBarBorder;

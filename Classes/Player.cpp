@@ -56,13 +56,16 @@ void Player::damage (Damage::Type type) {
     hp -= type;
     if (hp <= 0) {
         isDead = true;
+        this->setOpacity (0);
     }
 }
 
 void Player::setIsRage(const bool & rage){
 	if (isRage != rage){
-		if (rage)
-			setTexture("aquariusRage.png");
+        if (rage) {
+            setTexture ("aquariusRage.png");
+            this->hp = _MIN (Entities::maxHP, this->hp + 10);
+        }
 		else{
 			setTexture("aquarius.png");
 			resetRage();
@@ -79,9 +82,9 @@ int Player::getHp () {
     return hp;
 }
 
-void Player::rageIncrease(){
+void Player::rageIncrease (int value) {
 	if (!isRage){		
-		++rage;
+		rage += value;
 		if (rage >= Entities::rageCharging)
 		{
 			resetRage();

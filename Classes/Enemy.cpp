@@ -56,6 +56,6 @@ bool Enemy::getIsValid () {
 void Enemy::damage (Damage::Type type) {
     hp -= type;
     if (hp <= 0) {
-        isDead = true;
+        this->die ();
     }
 }

@@ -24,6 +24,9 @@ public:
     bool getIsValid ();
     void setInvalid () {
         isValid = false;
+        this->setOpacity (0);
+        //if (this->getParent () != nullptr)
+            //this->getParent ()->removeChild (this);
     }
 
 private:

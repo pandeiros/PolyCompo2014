@@ -65,8 +65,8 @@ namespace Enemies{
         EASY = 100,
         MEDIUM = 70,
         HARD = 30,
-        MEDIUM_CONDITION = 1000,
-        HARD_CONDITION = 3000
+        MEDIUM_CONDITION = 2000,
+        HARD_CONDITION = 5000
     };
 
     static int shootingFrequency = 200;
@@ -124,8 +124,9 @@ namespace Entities {
     };
 
     static float rageDuration = 5.f;
-    static int rageCharging = 15;
+    static int rageCharging = 25;
     static int maxHP = 100;
+    static float playerShootingFreq = 0.2f;
 }
 
 namespace Damage {

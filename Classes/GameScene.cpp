@@ -131,6 +131,51 @@ void GameScene::onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
             break;
         }
         case EventKeyboard::KeyCode::KEY_SPACE: {
+            if (mPlayer->getIsDead ())
+                break;
+
+            shootingTime = Entities::playerShootingFreq;
+        }
+    }
+
+    mapKeysPressed[keyCode] = true;
+}
+
+void GameScene::onKeyReleased (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
+    switch (keyCode) {
+        case EventKeyboard::KeyCode::KEY_SPACE: {
+            if (mPlayer->getIsDead ())
+                break;
+
+            shootingTime = 0.f;
+            break;
+        }
+    }
+
+    mapKeysPressed[keyCode] = false;
+}
+
+void GameScene::playerUpdate (float dt) {
+    if ((mPlayer == nullptr || (mPlayer != nullptr && mPlayer->getIsDead ())) && !isGameOver) {
+        isGameOver = true;
+        Director::getInstance ()->replaceScene (TransitionFade::create (3, MenuScene::createScene (), Color3B (0, 0, 0)));
+        return;
+    }
+
+    // Player update
+    mPlayer->move (mapKeysPressed[EventKeyboard::KeyCode::KEY_UP_ARROW] * Movement::UP |
+                   mapKeysPressed[EventKeyboard::KeyCode::KEY_RIGHT_ARROW] * Movement::RIGHT |
+                   mapKeysPressed[EventKeyboard::KeyCode::KEY_DOWN_ARROW] * Movement::DOWN |
+                   mapKeysPressed[EventKeyboard::KeyCode::KEY_LEFT_ARROW] * Movement::LEFT,
+                   dt);
+
+    // Spawn missiles
+    if (mapKeysPressed[EventKeyboard::KeyCode::KEY_SPACE]) {
+        shootingTime += dt;
+
+        if (shootingTime >= Entities::playerShootingFreq) {
+            shootingTime -= Entities::playerShootingFreq;
+
             Missile * missile;
             if (mPlayer->getIsRage ())
                 missile = Missile::create (mPlayer->getPosition (), Missiles::M_FIREBALL, Movement::RIGHT, world);
@@ -139,27 +184,8 @@ void GameScene::onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
 
             vecMissiles.push_back (missile);
             this->addChild (missile, Layers::MISSILES);
-            break;
         }
     }
-
-    mapKeysPressed[keyCode] = true;
-}
-
-void GameScene::onKeyReleased (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
-    mapKeysPressed[keyCode] = false;
-}
-
-void GameScene::playerUpdate (float dt) {
-    if (mPlayer == nullptr)
-        return;
-
-    // Player update
-    mPlayer->move (mapKeysPressed[EventKeyboard::KeyCode::KEY_UP_ARROW] * Movement::UP |
-                   mapKeysPressed[EventKeyboard::KeyCode::KEY_RIGHT_ARROW] * Movement::RIGHT |
-                   mapKeysPressed[EventKeyboard::KeyCode::KEY_DOWN_ARROW] * Movement::DOWN |
-                   mapKeysPressed[EventKeyboard::KeyCode::KEY_LEFT_ARROW] * Movement::LEFT,
-                   dt);
 
     // Rage behaviour
     if (mPlayer->getIsRage ()) {
@@ -207,11 +233,15 @@ void GameScene::enemiesUpdate (float dt) {
         this->addChild (enemy, Layers::ENTITIES);
         vecEnemies.push_back (enemy);
     }
+
     for (unsigned int iEnemy = 0; iEnemy < vecEnemies.size (); ++iEnemy) {
         if (vecEnemies[iEnemy] != nullptr) {
             if (vecEnemies[iEnemy]->getIsValid () && !vecEnemies[iEnemy]->getIsDead ()) {
 
                 int shootChance = rand () % Enemies::shootingFrequency;
+                if (mPlayer->getIsDead ())
+                    shootChance = 1;
+
                 if (shootChance == 0) {
                     Missile * missile;
                     missile = Missile::create (vecEnemies[iEnemy]->getPosition (), Missiles::M_ENEMYS_BALL, Movement::LEFT, world);
@@ -276,6 +306,23 @@ void GameScene::guiUpdate (float dt) {
         _MIN (mPlayer->getRage () / (float)Entities::rageCharging * mRageBarBorder->getBoundingBox ().size.width,
         mRageBarBorder->getBoundingBox ().size.width),
         28.f));
+
+    // Change difficulty if condition true
+    switch (currentDifficulty) {
+        case Enemies::EASY: {
+            if (points >= Enemies::MEDIUM_CONDITION)
+                currentDifficulty = Enemies::MEDIUM;
+            break;
+        }
+        case Enemies::MEDIUM: {
+            if (points >= Enemies::HARD_CONDITION)
+                currentDifficulty = Enemies::HARD;
+            break;
+        }
+    }
+
+    Entities::playerShootingFreq = _MAX(0.1f, 0.2f - (float)((points / 2000) / 100.f));
+  
 }
 
 void GameScene::updatePhysics (float dt) {
@@ -295,7 +342,86 @@ void GameScene::updatePhysics (float dt) {
     }
 }
 
-void handleCollisions (float dt) {
+void GameScene::handleCollisions () {
+    // Acquire player Rectangle
+    cocos2d::Rect playerRect (mPlayer->getPosition ().x - (mPlayer->getBoundingBox ().size.width / 2),
+                              mPlayer->getPosition ().y - (mPlayer->getBoundingBox ().size.height / 2),
+                              mPlayer->getBoundingBox ().size.width,
+                              mPlayer->getBoundingBox ().size.height);
 
+    // Player <-> Enemy missile
+    if (vecMissiles.size () > 0) {
+        for (unsigned int i = 0; i < vecMissiles.size () - 1; ++i) {
+            if (vecMissiles[i]->type != Entities::LASER || vecMissiles[i] == nullptr || vecMissiles[i]->getIsValid () == false)
+                continue;
+
+            cocos2d::Rect missileRect (vecMissiles[i]->getPosition ().x - (vecMissiles[i]->getBoundingBox ().size.width / 2),
+                                       vecMissiles[i]->getPosition ().y - (vecMissiles[i]->getBoundingBox ().size.height / 2),
+                                       vecMissiles[i]->getBoundingBox ().size.width,
+                                       vecMissiles[i]->getBoundingBox ().size.height);
+
+            if (missileRect.intersectsRect (playerRect)) {
+                vecMissiles[i]->setInvalid ();
+                mPlayer->damage (Damage::ENEMY_PROJ_DMG);
+            }
+        }
+    }
+
+    // Player <-> Enemy
+    if (vecEnemies.size () > 0) {
+        for (unsigned int i = 0; i < vecEnemies.size () - 1; ++i) {
+            if (mPlayer->getIsDead ())
+                break;
+
+            if (vecEnemies[i] == nullptr || vecEnemies[i]->getIsValid () == false)
+                continue;
+
+            cocos2d::Rect enemyRect (vecEnemies[i]->getPosition ().x - (vecEnemies[i]->getBoundingBox ().size.width / 2),
+                                     vecEnemies[i]->getPosition ().y - (vecEnemies[i]->getBoundingBox ().size.height / 2),
+                                     vecEnemies[i]->getBoundingBox ().size.width,
+                                     vecEnemies[i]->getBoundingBox ().size.height);
+
+            if (enemyRect.intersectsRect (playerRect)) {
+                vecEnemies[i]->die ();
+                mPlayer->damage (Damage::ENEMY_DMG);
+                mPlayer->rageIncrease (5);
+                points -= 100;
+            }
+        }
+    }
+    // Enemy <-> Player missile
+    if (vecEnemies.size () > 0) {
+        for (unsigned int e = 0; e < vecEnemies.size () - 1; ++e) {
+            if (vecEnemies[e] == nullptr || vecEnemies[e]->getIsValid () == false)
+                continue;
+
+            if (vecMissiles.size () > 0) {
+                for (unsigned int m = 0; m < vecMissiles.size () - 1; ++m) {
+                    if ((vecMissiles[m]->type != Entities::WATERBALL && vecMissiles[m]->type != Entities::FIREBALL) || vecMissiles[m] == nullptr || vecMissiles[m]->getIsValid () == false)
+                        continue;
+
+
+                    cocos2d::Rect missileRect (vecMissiles[m]->getPosition ().x - (vecMissiles[m]->getBoundingBox ().size.width / 2),
+                                               vecMissiles[m]->getPosition ().y - (vecMissiles[m]->getBoundingBox ().size.height / 2),
+                                               vecMissiles[m]->getBoundingBox ().size.width,
+                                               vecMissiles[m]->getBoundingBox ().size.height);
+
+                    cocos2d::Rect enemyRect (vecEnemies[e]->getPosition ().x - (vecEnemies[e]->getBoundingBox ().size.width / 2),
+                                             vecEnemies[e]->getPosition ().y - (vecEnemies[e]->getBoundingBox ().size.height / 2),
+                                             vecEnemies[e]->getBoundingBox ().size.width,
+                                             vecEnemies[e]->getBoundingBox ().size.height);
+
+                    if (missileRect.intersectsRect (enemyRect)) {
+                        mPlayer->rageIncrease (1);
+                        vecEnemies[e]->damage (vecMissiles[m]->type == Entities::WATERBALL ? Damage::WATERBALL_DMG : Damage::FIREBALL_DMG);
+                        vecMissiles[m]->setInvalid ();
+                        points += 20;
+                        if (vecEnemies[e]->getIsDead ())
+                            points += 100;
+                    }
+                }
+            }
+        }
+    }
 }
 

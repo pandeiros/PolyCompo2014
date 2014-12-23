@@ -29,8 +29,20 @@ public:
         return isDead;
     }
 
+    void setInvalid () {
+        isValid = false;
+    }
+
+    void die () {
+        isValid = false;
+        isDead = true;
+        this->setOpacity (0);
+        /*if (this->getParent () != nullptr)
+            this->getParent ()->removeChild (this);*/
+    }
+
 private:
-    bool isValid; 
+    bool isValid = true; 
     b2Body * body;
 
     int hp = 50;

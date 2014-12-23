@@ -23,7 +23,7 @@ public:
         return isDead;
     }
 
-	void rageIncrease();
+	void rageIncrease(int value);
 	void resetRage();
 	void setIsRage(const bool & rage);
 	bool rageController();
@@ -31,6 +31,10 @@ public:
     int getHp ();
     int getRage () {
         return rage;
+    }
+
+    void setHp (int newHp) {
+        this->hp = newHp;
     }
 	
 private:
