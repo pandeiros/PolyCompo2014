@@ -41,7 +41,8 @@ namespace Movement {
     };
 
     static float playerSpeed = 40000.f;
-    static float missileSpeed = 100000.f;
+    static float playerMissileSpeed = 100000.f;
+    static float enemyMissileSpeed = 50000.f;
     static float enemySpeed = 20000.f;
     static float starSpeed = 10.f;
 }
@@ -63,8 +64,12 @@ namespace Enemies{
     enum Difficulty {
         EASY = 100,
         MEDIUM = 70,
-        HARD = 30
+        HARD = 30,
+        MEDIUM_CONDITION = 1000,
+        HARD_CONDITION = 3000
     };
+
+    static int shootingFrequency = 200;
 }
 
 namespace Cutscenes {
@@ -113,10 +118,13 @@ namespace Entities {
     enum Type {
         WATERBALL,
         FIREBALL,
-        DART,
+        LASER,
         PLAYER,
         ENEMY,
     };
+
+    static float rageDuration = 5.f;
+    static int rageCharging = 15;
 }
 
 namespace Damage {

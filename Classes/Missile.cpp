@@ -17,14 +17,20 @@ Missile* Missile::create (cocos2d::Vec2 position, Missiles::Type type, Movement:
         case Missiles::M_WATERBALL:
             filename = "waterball.png";
             missile->type = Entities::WATERBALL;
+            missile->setScale (1.5f);
+            missile->speed = Movement::playerMissileSpeed;
             break;
         case Missiles::M_FIREBALL:
             filename = "fireball.png";
             missile->type = Entities::FIREBALL;
+            missile->setScale (1.25f);
+            missile->speed = Movement::playerMissileSpeed * 0.75;
             break;
         case Missiles::M_ENEMYS_BALL:
-            filename = "EnemyProjectile";
-            missile->type = Entities::DART;
+            filename = "enemyLaser.png";
+            missile->type = Entities::LASER;
+            missile->setScale (0.6f);
+            missile->speed = Movement::enemyMissileSpeed;
             break;
     }
 
@@ -55,7 +61,7 @@ Missile* Missile::create (cocos2d::Vec2 position, Missiles::Type type, Movement:
 void Missile::update (float dt) {
 
     //this->setPosition (this->getPosition () + cocos2d::Vec2 (this->dx * Movement::missileSpeed * dt, this->dy * Movement::missileSpeed * dt));
-    body->SetLinearVelocity (BodyCreator::convertToBoxVec (cocos2d::Vec2 (this->dx * Movement::missileSpeed * dt, this->dy * Movement::missileSpeed * dt)));
+    body->SetLinearVelocity (BodyCreator::convertToBoxVec (cocos2d::Vec2 (this->dx * speed * dt, this->dy * speed * dt)));
     if (this->getPosition ().x > 3000 || this->getPosition ().x < -1000) {
 
         this->isValid = false;

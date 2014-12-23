@@ -31,9 +31,11 @@ public:
     virtual void onKeyReleased (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
 private:
+    void playerUpdate (float dt);
     void missilesUpdate (float dt);
     void enemiesUpdate (float dt);
     void starsUpdate (float dt);
+    void guiUpdate (float dt);
     void updatePhysics (float dt);
 
     Player * mPlayer;
@@ -41,8 +43,10 @@ private:
     std::vector <Enemy *> vecEnemies;
     std::vector <Star *> vecStars;
 
-	cocos2d::LabelTTF * pointsLabel;
-	int points;
+	cocos2d::Label * pointsLabel;
+    Enemies::Difficulty currentDifficulty = Enemies::EASY;
+	int points = 0;
+    float rageTime = 0,f;
 
     b2World * world;
     ContactListener * CL;

@@ -68,15 +68,8 @@ bool GameScene::init () {
     world->SetContactListener (CL);
 
 	// Points
-	pointsLabel = LabelTTF::create();
-	points = 0;
-	std::string boom, boom2;
-	boom = "Points: ";
-	boom2 = std::to_string(points);
-	boom += boom2;
-	pointsLabel->setString(boom);
-	pointsLabel->setAnchorPoint(ccp(0, 0.f));
-	pointsLabel->setPosition(Vec2(0.f, 0.f));
+    pointsLabel = Label::createWithTTF ("Score: " + std::to_string(points), "fonts/DKCoolCrayon.ttf", 25.f);
+    pointsLabel->setPosition (10 + pointsLabel->getBoundingBox ().size.width / 2, 20);
 	this->addChild(pointsLabel, Layers::GUI);
 
     return true;
@@ -87,12 +80,8 @@ void GameScene::update (float dt) {
     this->updatePhysics (dt);
 
     // Player update
-    mPlayer->move (mapKeysPressed[EventKeyboard::KeyCode::KEY_UP_ARROW] * Movement::UP |
-                   mapKeysPressed[EventKeyboard::KeyCode::KEY_RIGHT_ARROW] * Movement::RIGHT |
-                   mapKeysPressed[EventKeyboard::KeyCode::KEY_DOWN_ARROW] * Movement::DOWN |
-                   mapKeysPressed[EventKeyboard::KeyCode::KEY_LEFT_ARROW] * Movement::LEFT,
-                   dt);
-
+    playerUpdate (dt);
+    
     // Missile update
     missilesUpdate (dt);
 
@@ -102,27 +91,8 @@ void GameScene::update (float dt) {
     // Star update
     starsUpdate (dt);
 
-    if (mPlayer->getIsDead ()) {
-        if (mPlayer->getParent () != nullptr)
-            mPlayer->getParent ()->removeChild (this);
-
-    }
-
-	// rage behaviour
-
-
-	if (mPlayer->getIsRage())
-		mPlayer->rageController();
-
-	// Obsluga punktow i enrage
-		/* boom = "Points: ";
-			boom2 = std::to_string(++points);
-			boom += boom2;
-			pointsLabel->setString(boom);
-			mPlayer->setTexture("aquariusRage.png");
-			Missile * missile = Missile::create(mPlayer->getPosition(), Missiles::M_FIREBALL, Movement::RIGHT, world);
-			Missile * missile = Missile::create(Vec2(mPlayer->getPosition().x+30, mPlayer->getPosition().y+45), Missiles::M_WATERBALL, Movement::RIGHT, world);
-			*/
+    // GUI update
+    guiUpdate (dt);
 }
 
 
@@ -137,12 +107,10 @@ void GameScene::onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
 			if (mPlayer->getIsRage())
 				missile = Missile::create(mPlayer->getPosition(), Missiles::M_FIREBALL, Movement::RIGHT, world);
 			else
-				missile = Missile::create(Vec2(mPlayer->getPosition().x + 30, mPlayer->getPosition().y + 45), Missiles::M_WATERBALL, Movement::RIGHT, world);
+				missile = Missile::create(Vec2(mPlayer->getPosition().x + 35, mPlayer->getPosition().y + 40), Missiles::M_WATERBALL, Movement::RIGHT, world);
 													
-			//Missile * missile = Missile::create(Vec2(mPlayer->getPosition().x+30, mPlayer->getPosition().y+45), Missiles::M_WATERBALL, Movement::RIGHT, world);
             vecMissiles.push_back (missile);
             this->addChild (missile, Layers::MISSILES);
-			mPlayer->rageIncrease();
             break;
         }
     }
@@ -152,6 +120,35 @@ void GameScene::onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::
 
 void GameScene::onKeyReleased (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
     mapKeysPressed[keyCode] = false;
+}
+
+void GameScene::playerUpdate (float dt) {
+    if (mPlayer == nullptr)
+        return;
+
+    // Player update
+    mPlayer->move (mapKeysPressed[EventKeyboard::KeyCode::KEY_UP_ARROW] * Movement::UP |
+                   mapKeysPressed[EventKeyboard::KeyCode::KEY_RIGHT_ARROW] * Movement::RIGHT |
+                   mapKeysPressed[EventKeyboard::KeyCode::KEY_DOWN_ARROW] * Movement::DOWN |
+                   mapKeysPressed[EventKeyboard::KeyCode::KEY_LEFT_ARROW] * Movement::LEFT,
+                   dt);
+
+    // Rage behaviour
+    if (mPlayer->getIsRage ()) {
+        rageTime += dt;
+        if (rageTime > Entities::rageDuration) {
+            mPlayer->setIsRage (false);
+            rageTime = 0.f;
+        }
+
+    }
+
+    // Player destruction
+    if (mPlayer->getIsDead ()) {
+        if (mPlayer->getParent () != nullptr)
+            mPlayer->getParent ()->removeChild (this);
+
+    }
 }
 
 void GameScene::missilesUpdate (float dt) {
@@ -174,10 +171,10 @@ void GameScene::missilesUpdate (float dt) {
 }
 
 void GameScene::enemiesUpdate (float dt) {
-    int chance = rand () % Enemies::HARD;
+    int spawnChance = rand () % currentDifficulty;
     Size visibleSize = Director::getInstance ()->getVisibleSize ();
 
-    if (chance == 0) {
+    if (spawnChance == 0) {
         Enemy * enemy = Enemy::create (cocos2d::Vec2(visibleSize.width * 1.5, 100 + rand() % (int)(visibleSize.height * 0.8)), Enemies::E_TIEFIGHTER, Movement::LEFT, world);
         this->addChild (enemy, Layers::ENTITIES);
         vecEnemies.push_back (enemy);
@@ -185,7 +182,14 @@ void GameScene::enemiesUpdate (float dt) {
     for (unsigned int iEnemy = 0; iEnemy < vecEnemies.size (); ++iEnemy) {
         if (vecEnemies[iEnemy] != nullptr) {
             if (vecEnemies[iEnemy]->getIsValid () && !vecEnemies[iEnemy]->getIsDead()) {
-
+                
+                int shootChance = rand () % Enemies::shootingFrequency;
+                if (shootChance == 0) {
+                    Missile * missile;                   
+                    missile = Missile::create (vecEnemies[iEnemy]->getPosition (), Missiles::M_ENEMYS_BALL, Movement::LEFT, world);
+                    vecMissiles.push_back (missile);
+                    this->addChild (missile, Layers::MISSILES);
+                }
                 vecEnemies[iEnemy]->update (dt);
             }
             else {
@@ -227,6 +231,13 @@ void GameScene::starsUpdate (float dt) {
             vecEnemies.pop_back ();
         }
     }
+}
+
+void GameScene::guiUpdate (float dt) {
+    // Points handling
+    pointsLabel->setString ("Score: " + std::to_string (points));
+    pointsLabel->setPosition (10 + pointsLabel->getBoundingBox ().size.width / 2, 20);
+
 }
 
 void GameScene::updatePhysics (float dt) {

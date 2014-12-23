@@ -66,11 +66,9 @@ void Player::setIsRage(const bool & rage){
 		else{
 			setTexture("aquarius.png");
 			resetRage();
-			rageTimer = 0;
 		}
 	}
 	isRage = rage;
-
 }
 
 bool Player::getIsRage(){
@@ -78,11 +76,9 @@ bool Player::getIsRage(){
 }
 
 void Player::rageIncrease(){
-	if (!isRage){
-		
+	if (!isRage){		
 		++rage;
-
-		if (rage == 10)
+		if (rage >= Entities::rageCharging)
 		{
 			resetRage();
 			setIsRage(true);
@@ -92,13 +88,6 @@ void Player::rageIncrease(){
 
 void Player::resetRage(){
 	rage = 0;
-}
-
-bool Player::rageController(){
-	if (++rageTimer < 300)
-		return true;
-	setIsRage(false);
-	return false;
 }
 
 

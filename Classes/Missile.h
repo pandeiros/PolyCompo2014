@@ -31,6 +31,7 @@ private:
     Movement::Directions direction;
     int dx = 0;
     int dy = 0;
+    float speed = 0.f;
 
     b2Body * body;
 

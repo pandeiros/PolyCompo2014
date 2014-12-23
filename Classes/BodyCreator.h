@@ -59,7 +59,7 @@ b2Body* BodyCreator::createBody (Entities::Type type, b2Vec2 position, T* entity
         case Entities::ENEMY:
             polyShape->SetAsBox (112.f / 2.f / PixelPerMeter, 55.f / 2.f / PixelPerMeter);
             break;
-        case Entities::DART:
+        case Entities::LASER:
 
             break;
     }
