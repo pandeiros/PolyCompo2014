@@ -28,6 +28,10 @@ public:
 	void setIsRage(const bool & rage);
 	bool rageController();
 	bool getIsRage();
+    int getHp ();
+    int getRage () {
+        return rage;
+    }
 	
 private:
     b2Body * body;

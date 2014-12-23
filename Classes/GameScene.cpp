@@ -26,7 +26,7 @@ Scene* GameScene::createScene () {
 bool GameScene::init () {
     CCLOG ("GAME SCENE START");
 
-    srand ((int) std::time(NULL));
+    srand ((int)std::time (NULL));
 
     if (!MainScene::init ()) {
         return false;
@@ -48,7 +48,8 @@ bool GameScene::init () {
     mBackground->setPosition (Vec2 (origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
     this->addChild (mBackground, Layers::BACKGROUND);
 
-    mPlayer = Player::create (Vec2(400.f,400.f), world);
+    // Player
+    mPlayer = Player::create (Vec2 (400.f, 400.f), world);
     this->addChild (mPlayer, Layers::PLAYER);
 
     mapKeysPressed[EventKeyboard::KeyCode::KEY_UP_ARROW] = false;
@@ -56,21 +57,45 @@ bool GameScene::init () {
     mapKeysPressed[EventKeyboard::KeyCode::KEY_LEFT_ARROW] = false;
     mapKeysPressed[EventKeyboard::KeyCode::KEY_DOWN_ARROW] = false;
 
+    // Create starry background which moves
     for (unsigned int i = 0; i < 100; ++i) {
         Star * star = Star::create (cocos2d::Vec2 (50.f + rand () % (int)(visibleSize.width), 50.f + rand () % (int)(visibleSize.height * 0.9f)));
         star->setScale (0.2f + (rand () % 6) / 10.f);
         star->setOpacity (50 + (rand () % 200));
         this->addChild (star, Layers::SECOND_PLAN);
-		vecStars.push_back (star);
+        vecStars.push_back (star);
     }
 
+    // Assign Box2D contact listener to world
     CL = new ContactListener;
     world->SetContactListener (CL);
 
-	// Points
-    pointsLabel = Label::createWithTTF ("Score: " + std::to_string(points), "fonts/DKCoolCrayon.ttf", 25.f);
+    // Points
+    pointsLabel = Label::createWithTTF ("Score: " + std::to_string (points), "fonts/DKCoolCrayon.ttf", 25.f);
     pointsLabel->setPosition (10 + pointsLabel->getBoundingBox ().size.width / 2, 20);
-	this->addChild(pointsLabel, Layers::GUI);
+    this->addChild (pointsLabel, Layers::GUI);
+
+    // Bars
+    mHpBarBorder = Sprite::create ("BarBorder.png");
+    mRageBarBorder = Sprite::create ("BarBorder.png");
+    mHpBarFill = Sprite::create ("HpBarFill.png");
+    mRageBarFill = Sprite::create ("RageBarFill.png");
+
+    mRageBarFill->setTextureRect (cocos2d::Rect (0.f, 0.f, 0.f, mRageBarFill->getBoundingBox ().size.height));
+    mRageBarFill->setAnchorPoint (Vec2 (0.f, 0.5f));
+    mRageBarBorder->setAnchorPoint (Vec2 (0.f, 0.5f));
+    mHpBarBorder->setAnchorPoint (Vec2 (0.f, 0.5f));
+    mHpBarFill->setAnchorPoint (Vec2 (0.f, 0.5f));
+
+    mHpBarBorder->setPosition (100.f, visibleSize.height - 30.f);
+    mRageBarBorder->setPosition (350.f, visibleSize.height - 30.f);
+    mHpBarFill->setPosition (100.f, visibleSize.height - 30.f);
+    mRageBarFill->setPosition (350.f, visibleSize.height - 30.f);
+
+    this->addChild (mHpBarFill, Layers::GUI);
+    this->addChild (mRageBarFill, Layers::GUI);
+    this->addChild (mHpBarBorder, Layers::GUI);
+    this->addChild (mRageBarBorder, Layers::GUI);
 
     return true;
 }
@@ -79,9 +104,12 @@ bool GameScene::init () {
 void GameScene::update (float dt) {
     this->updatePhysics (dt);
 
+    // Interpret collisions
+    handleCollisions ();
+
     // Player update
     playerUpdate (dt);
-    
+
     // Missile update
     missilesUpdate (dt);
 
@@ -97,18 +125,18 @@ void GameScene::update (float dt) {
 
 
 void GameScene::onKeyPressed (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {
-	switch (keyCode) {
+    switch (keyCode) {
         case EventKeyboard::KeyCode::KEY_ESCAPE: {
             Director::getInstance ()->replaceScene (TransitionFade::create (1, MenuScene::createScene (), Color3B (0, 0, 0)));
             break;
         }
         case EventKeyboard::KeyCode::KEY_SPACE: {
-			Missile * missile;
-			if (mPlayer->getIsRage())
-				missile = Missile::create(mPlayer->getPosition(), Missiles::M_FIREBALL, Movement::RIGHT, world);
-			else
-				missile = Missile::create(Vec2(mPlayer->getPosition().x + 35, mPlayer->getPosition().y + 40), Missiles::M_WATERBALL, Movement::RIGHT, world);
-													
+            Missile * missile;
+            if (mPlayer->getIsRage ())
+                missile = Missile::create (mPlayer->getPosition (), Missiles::M_FIREBALL, Movement::RIGHT, world);
+            else
+                missile = Missile::create (Vec2 (mPlayer->getPosition ().x + 35, mPlayer->getPosition ().y + 40), Missiles::M_WATERBALL, Movement::RIGHT, world);
+
             vecMissiles.push_back (missile);
             this->addChild (missile, Layers::MISSILES);
             break;
@@ -175,17 +203,17 @@ void GameScene::enemiesUpdate (float dt) {
     Size visibleSize = Director::getInstance ()->getVisibleSize ();
 
     if (spawnChance == 0) {
-        Enemy * enemy = Enemy::create (cocos2d::Vec2(visibleSize.width * 1.5, 100 + rand() % (int)(visibleSize.height * 0.8)), Enemies::E_TIEFIGHTER, Movement::LEFT, world);
+        Enemy * enemy = Enemy::create (cocos2d::Vec2 (visibleSize.width * 1.5, 100 + rand () % (int)(visibleSize.height * 0.8)), Enemies::E_TIEFIGHTER, Movement::LEFT, world);
         this->addChild (enemy, Layers::ENTITIES);
         vecEnemies.push_back (enemy);
     }
     for (unsigned int iEnemy = 0; iEnemy < vecEnemies.size (); ++iEnemy) {
         if (vecEnemies[iEnemy] != nullptr) {
-            if (vecEnemies[iEnemy]->getIsValid () && !vecEnemies[iEnemy]->getIsDead()) {
-                
+            if (vecEnemies[iEnemy]->getIsValid () && !vecEnemies[iEnemy]->getIsDead ()) {
+
                 int shootChance = rand () % Enemies::shootingFrequency;
                 if (shootChance == 0) {
-                    Missile * missile;                   
+                    Missile * missile;
                     missile = Missile::create (vecEnemies[iEnemy]->getPosition (), Missiles::M_ENEMYS_BALL, Movement::LEFT, world);
                     vecMissiles.push_back (missile);
                     this->addChild (missile, Layers::MISSILES);
@@ -210,7 +238,7 @@ void GameScene::starsUpdate (float dt) {
 
     if (chance == 0) {
         Star * star = Star::create (cocos2d::Vec2 (visibleSize.width * 1.03, 100 + rand () % (int)(visibleSize.height * 0.8)));
-        star->setScale (0.2f + (rand() % 8) / 10.f);
+        star->setScale (0.2f + (rand () % 8) / 10.f);
         star->setOpacity (50 + (rand () % 200));
         this->addChild (star, Layers::SECOND_PLAN);
         vecStars.push_back (star);
@@ -238,6 +266,16 @@ void GameScene::guiUpdate (float dt) {
     pointsLabel->setString ("Score: " + std::to_string (points));
     pointsLabel->setPosition (10 + pointsLabel->getBoundingBox ().size.width / 2, 20);
 
+    // Bars update
+    mHpBarFill->setTextureRect (cocos2d::Rect (0.f, 0.f,
+        _MIN (mPlayer->getHp () / (float)Entities::maxHP * mHpBarBorder->getBoundingBox ().size.width,
+        mHpBarBorder->getBoundingBox ().size.width),
+        28.f));
+
+    mRageBarFill->setTextureRect (cocos2d::Rect (0.f, 0.f,
+        _MIN (mPlayer->getRage () / (float)Entities::rageCharging * mRageBarBorder->getBoundingBox ().size.width,
+        mRageBarBorder->getBoundingBox ().size.width),
+        28.f));
 }
 
 void GameScene::updatePhysics (float dt) {
@@ -255,5 +293,9 @@ void GameScene::updatePhysics (float dt) {
             myActor->setRotation (-1 * CC_RADIANS_TO_DEGREES (b->GetAngle ()));
         }
     }
+}
+
+void handleCollisions (float dt) {
+
 }
 

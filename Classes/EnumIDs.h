@@ -125,6 +125,7 @@ namespace Entities {
 
     static float rageDuration = 5.f;
     static int rageCharging = 15;
+    static int maxHP = 100;
 }
 
 namespace Damage {

@@ -75,6 +75,10 @@ bool Player::getIsRage(){
 	return isRage;
 }
 
+int Player::getHp () {
+    return hp;
+}
+
 void Player::rageIncrease(){
 	if (!isRage){		
 		++rage;

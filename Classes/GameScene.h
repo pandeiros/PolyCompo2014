@@ -37,6 +37,7 @@ private:
     void starsUpdate (float dt);
     void guiUpdate (float dt);
     void updatePhysics (float dt);
+    void handleCollisions ();
 
     Player * mPlayer;
     std::vector <Missile*> vecMissiles;
@@ -47,6 +48,11 @@ private:
     Enemies::Difficulty currentDifficulty = Enemies::EASY;
 	int points = 0;
     float rageTime = 0,f;
+
+    cocos2d::Sprite * mHpBarBorder;
+    cocos2d::Sprite * mRageBarBorder;
+    cocos2d::Sprite * mHpBarFill;
+    cocos2d::Sprite * mRageBarFill;
 
     b2World * world;
     ContactListener * CL;
