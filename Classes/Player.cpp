@@ -11,7 +11,7 @@ Player* Player::create (cocos2d::Vec2 position, b2World * world) {
     pSprite->body = BodyCreator::createBody<Player>(Entities::PLAYER, BodyCreator::convertToBoxVec(position), pSprite, world);
     pSprite->type = Entities::PLAYER;
 
-    if (pSprite->initWithFile ("aquarius.png")) {
+    if (pSprite->initWithFile ("sprites/aquarius.png")) {
         pSprite->autorelease ();
         pSprite->setPosition(position);
 
@@ -63,11 +63,11 @@ void Player::damage (Damage::Type type) {
 void Player::setIsRage(const bool & rage){
 	if (isRage != rage){
         if (rage) {
-            setTexture ("aquariusRage.png");
+            setTexture ("sprites/aquariusRage.png");
             this->hp = _MIN (Entities::maxHP, this->hp + 10);
         }
 		else{
-			setTexture("aquarius.png");
+			setTexture("sprites/aquarius.png");
 			resetRage();
 		}
 	}

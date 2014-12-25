@@ -10,23 +10,17 @@
     <Filter Include="resource">
       <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\Player">
-      <UniqueIdentifier>{20577739-84db-4965-b910-37bb1eb3e0d5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\Core">
       <UniqueIdentifier>{9062a90e-e7c1-4bf2-8755-4aa037729da0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\Scenes">
       <UniqueIdentifier>{1f6dbf50-99a9-46d2-8ff1-fc6d8524afaf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\Missiles">
-      <UniqueIdentifier>{64cb1a28-4f9d-40c3-bc2f-b5a3de6b9a54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\Enemies">
-      <UniqueIdentifier>{8df9e0ab-1ec6-40e1-a762-b2a75daa88a9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\BodyCreator">
       <UniqueIdentifier>{761c953e-1339-482a-83ac-40691c0a87a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Entities">
+      <UniqueIdentifier>{98a55e71-f428-4421-8fb8-dc3e030a8490}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -45,9 +39,6 @@
     <ClCompile Include="..\Classes\MenuScene.cpp">
       <Filter>Classes\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Player.cpp">
-      <Filter>Classes\Player</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\AnimatedSprite.cpp">
       <Filter>Classes\Core</Filter>
     </ClCompile>
@@ -57,26 +48,32 @@
     <ClCompile Include="..\Classes\IntroScene.cpp">
       <Filter>Classes\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Missile.cpp">
-      <Filter>Classes\Missiles</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Star.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\BodyCreator.cpp">
       <Filter>Classes\BodyCreator</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Entity.cpp">
       <Filter>Classes\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Enemy.cpp">
-      <Filter>Classes\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\GLES-Render.cpp">
       <Filter>Classes\Core</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\B2DebugDrawLayer.cpp">
       <Filter>Classes\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Enemy.cpp">
+      <Filter>Classes\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Missile.cpp">
+      <Filter>Classes\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>Classes\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Star.cpp">
+      <Filter>Classes\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CreditsScene.cpp">
+      <Filter>Classes\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -95,9 +92,6 @@
     <ClInclude Include="..\Classes\MenuScene.h">
       <Filter>Classes\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Player.h">
-      <Filter>Classes\Player</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\AnimatedSprite.h">
       <Filter>Classes\Core</Filter>
     </ClInclude>
@@ -110,12 +104,6 @@
     <ClInclude Include="..\Classes\IntroScene.h">
       <Filter>Classes\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Missile.h">
-      <Filter>Classes\Missiles</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Star.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\BodyCreator.h">
       <Filter>Classes\BodyCreator</Filter>
     </ClInclude>
@@ -125,14 +113,26 @@
     <ClInclude Include="..\Classes\Entity.h">
       <Filter>Classes\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Enemy.h">
-      <Filter>Classes\Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\B2DebugDrawLayer.h">
       <Filter>Classes\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GLES-Render.h">
       <Filter>Classes\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Enemy.h">
+      <Filter>Classes\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Missile.h">
+      <Filter>Classes\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
+      <Filter>Classes\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Star.h">
+      <Filter>Classes\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CreditsScene.h">
+      <Filter>Classes\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

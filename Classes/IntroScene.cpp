@@ -36,13 +36,13 @@ bool IntroScene::init () {
     Size visibleSize = Director::getInstance ()->getVisibleSize ();
 
     // Background
-    mBackground = Sprite::create ("Background.png");
+    mBackground = Sprite::create ("backgrounds/Background.png");
     mBackground->setPosition (Vec2 (origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
     this->addChild (mBackground, Layers::BACKGROUND);
 
     // Stars and StarLines
-    mStars = Sprite::create ("StarsLight.png");
-    mStarsLine = Sprite::create ("StarsLightLine.png");
+    mStars = Sprite::create ("sprites/StarsLight.png");
+    mStarsLine = Sprite::create ("sprites/StarsLightLine.png");
     mStars->setOpacity (0);
     mStarsLine->setOpacity (0);
     mStars->setPosition (855.f + mStars->getBoundingBox ().size.width / 2, 465.f);
@@ -56,31 +56,31 @@ bool IntroScene::init () {
     mDartShader->setPosition (300.f, 500.f);
     this->addChild (mDartShader, Layers::ENTITIES);
 
-    mDeafStar = Sprite::create ("DeafStar.png");
+    mDeafStar = Sprite::create ("sprites/DeafStar.png");
     mDeafStar->setPosition (-150.f, 319.f);
     this->addChild (mDeafStar, Layers::ENTITIES);
 
     // Laser
-    mLaser = Sprite::create ("DeafStarLasers.png");
+    mLaser = Sprite::create ("sprites/DeafStarLasers.png");
     mLaser->setOpacity (0);
     mLaser->setAnchorPoint (Vec2 (0.f, 0.f));
     mLaser->setPosition (155.f, 225.f);
     mDeafStar->addChild (mLaser, Layers::FRONT);
 
     // Explosion
-    mExplosion = Sprite::create ("Explosion.png");
+    mExplosion = Sprite::create ("sprites/Explosion.png");
     mExplosion->setOpacity (0);
     mExplosion->setPosition (265.f, 225.f);
     mStarsLine->addChild (mExplosion, Layers::FRONT);
 
-    mFlash = Sprite::create ("flash.png");
+    mFlash = Sprite::create ("backgrounds/flash.png");
     mFlash->setOpacity (0);
     mFlash->setAnchorPoint (Vec2 (0.f, 0.f));
     mFlash->setPosition (0.f, 0.f);
     this->addChild (mFlash, Layers::FRONT);
 
     // Fleet
-    mFleet = Sprite::create ("desTroyArrsFleet.png");
+    mFleet = Sprite::create ("sprites/desTroyArrsFleet.png");
     mFleet->setOpacity (0);
     mFleet->setPosition (400.f, 400.f);
     this->addChild (mFleet, Layers::SECOND_PLAN);
@@ -217,7 +217,7 @@ void IntroScene::update (float dt) {
             moveBy <Sprite> (mDeafStar, 8.f, Vec2 (395.f, 0.f), animationSpeed * dt);
             moveBy <Sprite> (mFleet, 8.f, Vec2 (80.f, 0.f), animationSpeed * dt);
             if ((int)time >= Cutscenes::_9_LASER) {
-                mDeafStar->setTexture ("DeafStarRage.png");
+                mDeafStar->setTexture ("sprites/DeafStarRage.png");
                 currentSceneFrame = Cutscenes::_9_LASER;
                 currentFrameTime = 0.f;
             }
@@ -257,7 +257,7 @@ void IntroScene::update (float dt) {
             if ((int)time >= Cutscenes::_11_AQUARIUS) {
                 mLabelBottom->setString (Cutscenes::intro12);
                 mLabelBottom->setPosition (170 + mLabelBottom->getBoundingBox ().size.width / 2, 90);
-                mBackground->setTexture ("gameBackground.png");
+                mBackground->setTexture ("backgrounds/gameBackground.png");
 
                 currentSceneFrame = Cutscenes::_11_AQUARIUS;
                 currentFrameTime = 0.f;

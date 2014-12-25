@@ -56,8 +56,15 @@ private:
     cocos2d::Sprite * mHpBarFill;
     cocos2d::Sprite * mRageBarFill;
 
+    cocos2d::Label * mGameOverInfo;
+
     b2World * world;
     ContactListener * CL;
+
+    template <class Type>
+    void fadeIn (Type * object, float duration) {
+        object->setOpacity (_MIN (255, time / duration * 255));
+    }
 };
 
 #endif

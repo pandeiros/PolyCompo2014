@@ -15,19 +15,19 @@ Missile* Missile::create (cocos2d::Vec2 position, Missiles::Type type, Movement:
     std::string filename = "";
     switch (type) {
         case Missiles::M_WATERBALL:
-            filename = "waterball.png";
+            filename = "sprites/waterball.png";
             missile->type = Entities::WATERBALL;
             missile->setScale (1.5f);
             missile->speed = Movement::playerMissileSpeed;
             break;
         case Missiles::M_FIREBALL:
-            filename = "fireball.png";
+            filename = "sprites/fireball.png";
             missile->type = Entities::FIREBALL;
             missile->setScale (1.25f);
             missile->speed = Movement::playerMissileSpeed * 0.75;
             break;
         case Missiles::M_ENEMYS_BALL:
-            filename = "enemyLaser.png";
+            filename = "sprites/enemyLaser.png";
             missile->type = Entities::LASER;
             missile->setScale (0.6f);
             missile->speed = Movement::enemyMissileSpeed;

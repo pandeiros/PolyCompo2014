@@ -9,7 +9,7 @@ Star::~Star () {
 Star* Star::create (cocos2d::Vec2 position) {
     Star* star = new Star ();
 
-    if (star->initWithFile ("star.png")) {
+    if (star->initWithFile ("sprites/star.png")) {
         star->autorelease ();
 
         star->initOptions (position);

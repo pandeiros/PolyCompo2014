@@ -17,10 +17,10 @@ Enemy* Enemy::create (cocos2d::Vec2 position, Enemies::Type type, Movement::Dire
 
     switch (type) {
         case 0:              {
-            filename = "TieFighter.png";
+            filename = "sprites/TieFighter.png";
             break;            }
         default:
-            filename = "TieFighter.png";
+            filename = "sprites/TieFighter.png";
             break;
     }
 

@@ -44,7 +44,7 @@ bool GameScene::init () {
     Size visibleSize = Director::getInstance ()->getVisibleSize ();
 
     // Background
-    mBackground = Sprite::create ("gameBackground.png");
+    mBackground = Sprite::create ("backgrounds/gameBackground.png");
     mBackground->setPosition (Vec2 (origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
     this->addChild (mBackground, Layers::BACKGROUND);
 
@@ -75,11 +75,17 @@ bool GameScene::init () {
     pointsLabel->setPosition (10 + pointsLabel->getBoundingBox ().size.width / 2, 20);
     this->addChild (pointsLabel, Layers::GUI);
 
+    mGameOverInfo = Label::createWithTTF ("Game Over\nScore: " + std::to_string (points), "fonts/DKCoolCrayon.ttf", 50.f);
+    mGameOverInfo->setPosition (visibleSize.width / 2.f, visibleSize.height / 2.f);
+    mGameOverInfo->setAlignment (cocos2d::TextHAlignment::CENTER);
+    mGameOverInfo->setOpacity (0);
+    this->addChild (mGameOverInfo, Layers::GUI);
+
     // Bars
-    mHpBarBorder = Sprite::create ("BarBorder.png");
-    mRageBarBorder = Sprite::create ("BarBorder.png");
-    mHpBarFill = Sprite::create ("HpBarFill.png");
-    mRageBarFill = Sprite::create ("RageBarFill.png");
+    mHpBarBorder = Sprite::create ("gui/BarBorder.png");
+    mRageBarBorder = Sprite::create ("gui/BarBorder.png");
+    mHpBarFill = Sprite::create ("gui/HpBarFill.png");
+    mRageBarFill = Sprite::create ("gui/RageBarFill.png");
 
     mRageBarFill->setTextureRect (cocos2d::Rect (0.f, 0.f, 0.f, mRageBarFill->getBoundingBox ().size.height));
     mRageBarFill->setAnchorPoint (Vec2 (0.f, 0.5f));
@@ -96,6 +102,8 @@ bool GameScene::init () {
     this->addChild (mRageBarFill, Layers::GUI);
     this->addChild (mHpBarBorder, Layers::GUI);
     this->addChild (mRageBarBorder, Layers::GUI);
+
+    time = 0.f;
 
     return true;
 }
@@ -121,6 +129,17 @@ void GameScene::update (float dt) {
 
     // GUI update
     guiUpdate (dt);
+
+    if (isGameOver && time <= 10.f) {
+        time += dt;
+        fadeIn <Label> (mGameOverInfo, 3.f);
+        if (time >= 5.f) {
+            time = 1000.f;
+            Director::getInstance ()->replaceScene (TransitionFade::create (3, MenuScene::createScene (), Color3B (0, 0, 0)));
+            
+            return;
+        }
+    }
 }
 
 
@@ -158,7 +177,7 @@ void GameScene::onKeyReleased (cocos2d::EventKeyboard::KeyCode keyCode, cocos2d:
 void GameScene::playerUpdate (float dt) {
     if ((mPlayer == nullptr || (mPlayer != nullptr && mPlayer->getIsDead ())) && !isGameOver) {
         isGameOver = true;
-        Director::getInstance ()->replaceScene (TransitionFade::create (3, MenuScene::createScene (), Color3B (0, 0, 0)));
+        mGameOverInfo->setString ("Game Over\nScore: " + std::to_string (points));
         return;
     }
 
@@ -298,13 +317,13 @@ void GameScene::guiUpdate (float dt) {
 
     // Bars update
     mHpBarFill->setTextureRect (cocos2d::Rect (0.f, 0.f,
-        _MIN (mPlayer->getHp () / (float)Entities::maxHP * mHpBarBorder->getBoundingBox ().size.width,
-        mHpBarBorder->getBoundingBox ().size.width),
+        _MAX (_MIN (mPlayer->getHp () / (float)Entities::maxHP * mHpBarBorder->getBoundingBox ().size.width,
+        mHpBarBorder->getBoundingBox ().size.width), 0),
         28.f));
 
     mRageBarFill->setTextureRect (cocos2d::Rect (0.f, 0.f,
-        _MIN (mPlayer->getRage () / (float)Entities::rageCharging * mRageBarBorder->getBoundingBox ().size.width,
-        mRageBarBorder->getBoundingBox ().size.width),
+        _MAX (_MIN (mPlayer->getRage () / (float)Entities::rageCharging * mRageBarBorder->getBoundingBox ().size.width,
+        mRageBarBorder->getBoundingBox ().size.width), 0),
         28.f));
 
     // Change difficulty if condition true
@@ -321,8 +340,8 @@ void GameScene::guiUpdate (float dt) {
         }
     }
 
-    Entities::playerShootingFreq = _MAX(0.1f, 0.2f - (float)((points / 2000) / 100.f));
-  
+    Entities::playerShootingFreq = _MAX (0.1f, 0.2f - (float)((points / 2000) / 100.f));
+
 }
 
 void GameScene::updatePhysics (float dt) {
