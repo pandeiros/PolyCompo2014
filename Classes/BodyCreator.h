@@ -12,7 +12,7 @@ public:
     ~BodyCreator();
 
     template <typename T>
-    static b2Body* createBody (Entities::Type type, b2Vec2 position, T* entity, b2World * world);
+    static b2Body* createBody(Entities::Type type, b2Vec2 position, T* entity, b2World * world);
 
     static unsigned long globalId;
 
@@ -20,24 +20,27 @@ public:
 
     static b2World * world;
 
-    static b2Vec2 convertToBoxVec(cocos2d::Vec2 vec) {
-        return b2Vec2 (vec.x / PixelPerMeter, vec.y / PixelPerMeter);
+    static b2Vec2 convertToBoxVec(cocos2d::Vec2 vec)
+    {
+        return b2Vec2(vec.x / PixelPerMeter, vec.y / PixelPerMeter);
     }
 
-    static cocos2d::Vec2 convertToCocosVec(b2Vec2 vec) {
+    static cocos2d::Vec2 convertToCocosVec(b2Vec2 vec)
+    {
         return cocos2d::Vec2(vec.x * PixelPerMeter, vec.y * PixelPerMeter);
     }
 };
 
 template <typename T>
-b2Body* BodyCreator::createBody (Entities::Type type, b2Vec2 position, T* entity, b2World * world) {
+b2Body* BodyCreator::createBody(Entities::Type type, b2Vec2 position, T* entity, b2World * world)
+{
     b2BodyDef bodyDef;
     bodyDef.position = position;
     bodyDef.type = b2BodyType::b2_kinematicBody;
 
-    b2Body * body = world->CreateBody (&bodyDef);
+    b2Body * body = world->CreateBody(&bodyDef);
 
-    body->SetUserData (entity);
+    body->SetUserData(entity);
 
     b2FixtureDef fixtureDef;
     fixtureDef.density = 10.0;
@@ -46,7 +49,8 @@ b2Body* BodyCreator::createBody (Entities::Type type, b2Vec2 position, T* entity
     b2PolygonShape * polyShape;
     polyShape = new b2PolygonShape;
 
-    switch (type) {
+    switch (type)
+    {
         case Entities::WATERBALL:
 
             break;
@@ -54,10 +58,10 @@ b2Body* BodyCreator::createBody (Entities::Type type, b2Vec2 position, T* entity
 
             break;
         case Entities::PLAYER:
-            polyShape->SetAsBox (115.f / 2.f / PixelPerMeter, 138.f / 2.f / PixelPerMeter);
+            polyShape->SetAsBox(115.f / 2.f / PixelPerMeter, 138.f / 2.f / PixelPerMeter);
             break;
         case Entities::ENEMY:
-            polyShape->SetAsBox (112.f / 2.f / PixelPerMeter, 55.f / 2.f / PixelPerMeter);
+            polyShape->SetAsBox(112.f / 2.f / PixelPerMeter, 55.f / 2.f / PixelPerMeter);
             break;
         case Entities::LASER:
 
@@ -65,7 +69,7 @@ b2Body* BodyCreator::createBody (Entities::Type type, b2Vec2 position, T* entity
     }
 
     fixtureDef.shape = polyShape;
-    body->CreateFixture (&fixtureDef);
+    body->CreateFixture(&fixtureDef);
 
     return body;
 

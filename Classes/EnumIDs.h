@@ -1,8 +1,10 @@
 #ifndef _ENUM_IDS
 #define _ENUM_IDS
 
-namespace Layers {
-    enum SceneLayers {
+namespace Layers
+{
+    enum SceneLayers
+    {
         BACKGROUND,
         SECOND_PLAN,
         GUI,
@@ -14,13 +16,16 @@ namespace Layers {
     };
 }
 
-namespace States {
-    enum PlayerStates {
+namespace States
+{
+    enum PlayerStates
+    {
         P_IDLE,
         P_MOVE
     };
 
-    enum SceneStates {
+    enum SceneStates
+    {
         S_GAME,
         S_MENU,
         S_PAUSE,
@@ -28,8 +33,10 @@ namespace States {
     };
 }
 
-namespace Movement {
-    enum Directions {
+namespace Movement
+{
+    enum Directions
+    {
         UP = 1,
         RIGHT = 1 << 1,
         DOWN = 1 << 2,
@@ -47,21 +54,26 @@ namespace Movement {
     static float starSpeed = 10.f;
 }
 
-namespace Missiles{
-    enum Type{
+namespace Missiles
+{
+    enum Type
+    {
         M_WATERBALL,
         M_FIREBALL,
         M_ENEMYS_BALL
     };
 }
 
-namespace Enemies{
-    enum Type{
+namespace Enemies
+{
+    enum Type
+    {
         E_TIEFIGHTER = 0,
         E_OTHER_ = 1
     };
 
-    enum Difficulty {
+    enum Difficulty
+    {
         EASY = 100,
         MEDIUM = 70,
         HARD = 30,
@@ -72,8 +84,10 @@ namespace Enemies{
     static int shootingFrequency = 200;
 }
 
-namespace Cutscenes {
-    enum Intro {
+namespace Cutscenes
+{
+    enum Intro
+    {
         _1_SPRITE_PISCES = 0,
         _2_LABEL_PISCES = 3,
         _3_LABEL_TEXT_1 = 5,
@@ -91,7 +105,8 @@ namespace Cutscenes {
         _12_CONTINUE = 57,
     };
 
-    enum Menu {
+    enum Menu
+    {
         _0_MENU_INIT = 0,
         _1_MOVE_TITLE = 2,
         _2_SHOW_GUI = 4,
@@ -111,11 +126,13 @@ namespace Cutscenes {
     static std::string intro11 = "There was one last hope to end Dart Shader's madness...";
     static std::string intro12 = "Aquarius.";
     static std::string intro13 = "                                                                                           press Enter to continue...";
-    
+
 }
 
-namespace Entities {
-    enum Type {
+namespace Entities
+{
+    enum Type
+    {
         WATERBALL,
         FIREBALL,
         LASER,
@@ -129,8 +146,10 @@ namespace Entities {
     static float playerShootingFreq = 0.2f;
 }
 
-namespace Damage {
-    enum Type {
+namespace Damage
+{
+    enum Type
+    {
         WATERBALL_DMG = 20,
         FIREBALL_DMG = 50,
         ENEMY_DMG = 30,

@@ -6,14 +6,15 @@
 #include "AnimationUtils.h"
 #include <string>
 
-class AnimatedSprite : public cocos2d::Sprite {
+class AnimatedSprite : public cocos2d::Sprite
+{
 public:
-    AnimatedSprite ();
-    ~AnimatedSprite ();
+    AnimatedSprite();
+    ~AnimatedSprite();
 
-    static AnimatedSprite* create (std::string filename);
+    static AnimatedSprite* create(std::string filename);
 
-    void initOptions ();
+    void initOptions();
 };
 
 #endif

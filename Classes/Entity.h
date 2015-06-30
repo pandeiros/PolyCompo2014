@@ -8,12 +8,13 @@
 #include "EnumIDs.h"
 #include "BodyCreator.h"
 
-class Entity : public cocos2d::Sprite {
+class Entity : public cocos2d::Sprite
+{
 public:
     Entities::Type type;
 
-    Entity ();
-    ~Entity ();
+    Entity();
+    ~Entity();
 };
 
 #endif

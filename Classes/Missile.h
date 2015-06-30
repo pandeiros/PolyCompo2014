@@ -17,16 +17,15 @@ public:
     void update(float dt);
 
     // Methods
-    static Missile* create (cocos2d::Vec2 position, Missiles::Type type, Movement::Directions direction, b2World * world);
+    static Missile* create(cocos2d::Vec2 position, Missiles::Type type, Movement::Directions direction, b2World * world);
 
     void initOptions(cocos2d::Vec2 position);
 
-    bool getIsValid ();
-    void setInvalid () {
+    bool getIsValid();
+    void setInvalid()
+    {
         isValid = false;
-        this->setOpacity (0);
-        //if (this->getParent () != nullptr)
-            //this->getParent ()->removeChild (this);
+        this->setOpacity(0);
     }
 
 private:
@@ -37,7 +36,6 @@ private:
     float speed = 0.f;
 
     b2Body * body;
-
 };
 
 #endif

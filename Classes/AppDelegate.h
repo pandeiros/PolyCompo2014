@@ -13,8 +13,6 @@ The reason for implement as private inheritance is to hide some interface call b
 class  AppDelegate : private cocos2d::Application
 {
 public:
-    
-
     AppDelegate();
     virtual ~AppDelegate();
 
@@ -46,8 +44,6 @@ private:
 
     float mWidth = 1366;
     float mHeight = 768;
-
-   
 };
 
 #endif // _APP_DELEGATE_H_

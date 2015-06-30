@@ -13,36 +13,35 @@ public:
     Enemy();
     ~Enemy();
 
-    // Update
     void update(float dt);
 
-    // Methods
-    static Enemy* create (cocos2d::Vec2 position, Enemies::Type type, Movement::Directions direction, b2World * world);
+    static Enemy* create(cocos2d::Vec2 position, Enemies::Type type, Movement::Directions direction, b2World * world);
 
     void initOptions(cocos2d::Vec2 position);
 
     bool getIsValid();
 
-    void damage (Damage::Type type);
+    void damage(Damage::Type type);
 
-    bool getIsDead () {
+    bool getIsDead()
+    {
         return isDead;
     }
 
-    void setInvalid () {
+    void setInvalid()
+    {
         isValid = false;
     }
 
-    void die () {
+    void die()
+    {
         isValid = false;
         isDead = true;
-        this->setOpacity (0);
-        /*if (this->getParent () != nullptr)
-            this->getParent ()->removeChild (this);*/
+        this->setOpacity(0);
     }
 
 private:
-    bool isValid = true; 
+    bool isValid = true;
     b2Body * body;
 
     int hp = 50;
